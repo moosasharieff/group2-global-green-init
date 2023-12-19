@@ -17,7 +17,7 @@ function SignUp() {
       <div className="h-2/4 w-100 px-[700px] font-extrabold text-[240px] bg-lime-50">Green.</div>
       {/* <div className="blur-md"> */}
       <form
-        className="absolute bg-opacity-30 backdrop-filter h-3/4 w-auto p-6 bg-violet-400 top-[10%] left-[32%] rounded-lg grid grid-flow-row gap-0 items-center"
+        className="absolute bg-opacity-30 hover:drop-shadow-2xl hover:bg-green-300 backdrop-filter h-3/4 w-auto p-6 bg-green-200 top-[10%] left-[32%] rounded-lg grid grid-flow-row gap-0 items-center"
         onSubmit={handleRegisteration}
       >
         <h1 className="text-green-700 text-4xl font-bold pt-4">Nausicca's</h1>
@@ -30,8 +30,7 @@ function SignUp() {
               placeholder="Username"
               onChange={(e) => setUserName(e.target.value)}
             />
-
-          </label>Í
+          </label>
           <label htmlFor="email">
             <input
               className="border-slate-200 placeholder:indent-4 placeholder-slate-400 outline-none h-12 w-full rounded-md "
@@ -57,7 +56,7 @@ function SignUp() {
         >
           Sign Up
         </button>
-        <p>Already have an account? <Link to="/">Login</Link></p>
+        <p>Already have an account? <Link to="/signin">Login</Link></p>
       </form>
       {/* </div> */}
     </div>
