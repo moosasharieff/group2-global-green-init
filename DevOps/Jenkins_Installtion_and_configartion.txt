@@ -1,0 +1,7 @@
+# This file Contains jenkins installtion steps and configartion 
+
+Installtion of Jenkins 
+
+Commands 
+- sudo apt update
+- sudo apt install jenkins
