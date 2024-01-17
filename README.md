@@ -1,11 +1,11 @@
 # ProjTemplate
 
 **MScDevOps Assign :** group2-global-green-init
-**Adding feature branch**
+
 # Table of Contents
     Preamble
     Scrum Masters
-    Product Owner
+    Product Owner 
     Team Members
     Project Deadline
     Project Specification
@@ -32,19 +32,29 @@ Our product will be delivered using an Agile methodology that embraces the DevOp
 
 # Scrum Master
 <<list week number, student name>>
+week 1&2, Honnesh Muppala
+Week 3&4, Chandan Gowda
+Week 5&6, Mohammed Moosa
 Rotating scrum master so that everyone gets to experience the role once.
 
 # Product Owner
 <<list week number, student name>>
+week 1&2, Mohammed Moosa
+Week 3&4, Honnesh Muppala
+Week 5&6, Arun Babu
 Rotating product owner so that everyone gets to experience the role once.
 
 # Team Members
 <<list team member names here>>
+Week 5&6
+Honnesh Muppala, Priyanka, Shyam, Chandan, Vinayak
 
 # Project Deadline
 Thursday 23rd March at midnight
 
 # Project Specification
+Nausicaä’s Global Green Initiative The end customer would like an online application system for range of grants to support climate change initiatives. This is part of Studio Ghibli’s sustainable planet goals. Their most popular grant is Teto which provides funds of up to €10,000. The system must take details of customer and their funding requirements map them to the grant of their choice along with a single box for extra set of special award applications. The system should be clean and simple. Your team has been tasked with creating the pipeline for the SDLC. You have also been asked to provide a simple prototype page(s) to test the pipeline. The system needs to take into account the usual security requirements. The administrator of the end system (Nausicaä Enterprises) should be able to access detailed information and edit as appropriate. Once the client enters details it should not be able to be changed by the grant applicant.
+
 Clean and simple design
 User access levels (client, administrator)
 Includes at least one self developed api and one webservice
@@ -53,7 +63,16 @@ To be run over <specify platform>
 # Frameworks
 Database
 Database persistence technology
+
 Define the buisness Requirements
+1.Online Grant Application System - Develop an online platform for grant applications supporting climate change initiatives
+2.Grant Types - Provide different grant options, including the popular Teto grant offering funds up to €10,000
+3.User Registration and Details Collection - Gather applicant details and funding requirements to map them to suitable grants. Include an additional field for special award applications.
+4.Administrator Access - Allow Nausicaä Enterprises to access and edit detailed information securely.
+5.Data Security - Ensure robust security measures to protect applicant data and prevent unauthorized changes once submitted.
+6.Clean and Simple Interface - Design an intuitive and user-friendly interface for ease of use by grant applicants.
+7.Prototype Development - Create simple prototype pages to test the system's functionalities and validate the pipeline developed for the project.
+
 Named queries and database triggers for security
 Regex for cleansing and validation of data before sending to the database.
 
@@ -62,7 +81,7 @@ Regex for cleansing and validation of data before sending to the database.
  - GitHub: <<staff member's github repo for the student project>>
 
 # More Information
-For more information visit our other sections
+For more information visit JIRA Dashboard and Confluence 
 <<>>
 
 # Risk Register
@@ -76,8 +95,8 @@ Update the below to add what the group is using <<>>
   - programming using the IDE << >>
   - code coverage tool used <<>>
   - Secure code:  <<>>
-  - performance testing tool to be used <<>>
-- Documentation / code commenting <<>>
+  - performance testing tool to be used -- **Jmeter** 
+- Documentation / code commenting **Updating in JIRA Confluence**
 - Datastore for persistance <<>>
  
 # Security:
@@ -85,9 +104,9 @@ Update the below to add what the group is using <<>>
 - <<>>.
 
 # Testing:
-- Unit testing <<>>
-- integretation testing <<>>
-- UA  <<>>
+- Unit testing **Shyam and Moosa**
+- integretation testing **Arun,Chandan and Vinayak**
+- UA  **Honnesh and Priyanka**
     
 # Environments:
 - staging and production  <<>>
