@@ -26,6 +26,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+# Allowed cors apps
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'accounts'
+    'accounts',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -54,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'group2_global_green_init.urls'
