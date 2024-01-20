@@ -22,10 +22,6 @@ function Home() {
             alt="plant2"
             srcSet=""
           />
-          {/* <div className="flex w-full justify-around items-center">
-            <div className="bg-lime-200 border-2 p-1">Grant</div>
-            <div className="bg-lime-200 border-2 p-2">grant</div>
-          </div> */}
         </div>
         <div className="h-20 w-20 rounded-full bg-green-200">
           <div className="h-10 w-10 rounded-full bg-green-400 "></div>
