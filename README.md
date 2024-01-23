@@ -33,15 +33,15 @@ Each team should fill in the blanks <<>> and add additional content that the tea
 Our product will be delivered using an Agile methodology that embraces the DevOps culture. Please note that our culture embraces change and these documents are treated as living, breathing artefacts that will be continuously updated.
 
 # Scrum Master
-<<list week number, student name>>
-week 1&2, Honnesh Muppala
+
+Week 1&2, Honnesh Muppala
 Week 3&4, Chandan Gowda
 Week 5&6, Mohammed Moosa
-Week 7&8, Shyam Bist 
+Week 7&8, Shyam Bist (Current sprint)
 Rotating scrum master so that everyone gets to experience the role once.
 
 # Product Owner
-<<list week number, student name>>
+
 week 1&2, Mohammed Moosa
 Week 3&4, Honnesh Muppala
 Week 5&6, Arun Babu
@@ -49,9 +49,8 @@ Week 7&8, Vinayak Sharma
 Rotating product owner so that everyone gets to experience the role once.
 
 # Team Members
-<<list team member names here>>
 
-Honnesh Muppala, Priyanka Polasi, Shyam Bist, Chandan Gowda, Vinayak Sharma, Mohammed Moosa.
+Honnesh Muppala, Priyanka Polasi, Shyam Bist, Chandan Gowda, Vinayak Sharma, Mohammed Moosa, Arun Babu.
 
 # Project Deadline
 Thursday 23rd March at midnight
@@ -84,6 +83,8 @@ Regex for cleansing and validation of data before sending to the database.
  - Project Slack: https://atudevops.slack.com
  - GitHub: https://github.com/moosasharieff/group2-global-green-init
  - Project Website link: https://v1.globalgreeninit.world/
+ - Jira: https://group2ausicaas.atlassian.net/jira/software/projects/GREEN/boards/1
+ - Confluence: https://group2ausicaas.atlassian.net/wiki/spaces/TDWMZ/pages
 
 # More Information
 For more information visit JIRA Dashboard and Confluence 
