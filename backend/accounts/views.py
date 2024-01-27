@@ -42,7 +42,8 @@ def user_register_view(request):
 
             token = Token.objects.get(user = account).key
             data['token'] = token
-        else:
-            data = serializer.errors
+            return Response(data, status=status.HTTP_201_CREATED)
 
-        return Response(data)
+        data = serializer.errors
+        return Response(data, status = status.HTTP_400_BAD_REQUEST)
+
