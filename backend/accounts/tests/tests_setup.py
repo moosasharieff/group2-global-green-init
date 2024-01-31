@@ -16,6 +16,7 @@ class TestSetUp(APITestCase):
         test cases.
         """
         self.register_url = reverse('register')
+        self.login_url = reverse('login')
 
         # Using faker to generate user data
         self.fake = Faker()
