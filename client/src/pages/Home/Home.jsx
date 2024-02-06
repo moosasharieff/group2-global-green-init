@@ -1,38 +1,61 @@
-import Navbar from "../../components/navbar/Navbar";
-import plantImge1 from "../../assets/plant1.png";
 import plantImge2 from "../../assets/plant2.png";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Home() {
+  const { loginWithRedirect } = useAuth0();
+
   return (
-    <div className="fixed h-screen w-full bg-lime-50">
-      <div className="absolute grid grid-cols-3 inherit justify-center items-center pl-32 p-20">
-        <div className="w-96">
-          <h1 className="font-extrabold text-5xl">
-            Nausicca's <span className="text-green-400">Green</span>
+    <div className="fixed h-screen w-full bg-neutral-50">
+      <div className="grid-cols- grid w-full items-center justify-center p-4 md:grid-cols-2">
+        <div className="mt-10 grid place-items-center">
+          <h1 className="text-5xl font-extrabold">
+            Nausicca&apos;s <span className="text-green-400">Green</span>
           </h1>
-          <p className="pt-6">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
-            aspernatur ad eveniet quas laborum in quisquam sequi ipsa totam
-            aperiam autem delectus provident officia, dicta perspiciatis
-            voluptates, voluptatem veniam commodi.
+          <h2 className="mt-4 text-2xl font-semibold">
+            A small business is as good as good as it tools.
+          </h2>
+          <p className="pt-6 md:w-[70%]">
+            Empowering positive change by connecting grantors with impactful
+            projects. At GrantorHub, we believe in making a difference. Explore
+            and support projects that align with your values and create a
+            lasting impact on communities around the world.
           </p>
+          <button
+            className="mt-10 h-12 w-full rounded-lg bg-green-300 text-green-700 hover:bg-green-500 hover:text-white md:w-32"
+            type="submit"
+            onClick={() => loginWithRedirect()}
+          >
+            Sign Up
+          </button>
           <img
-            className="h-auto cursor-pointer hover:drop-shadow-2xl bg-clip-border"
+            className="h-auto cursor-pointer bg-clip-border hover:drop-shadow-2xl"
             src={plantImge2}
             alt="plant2"
             srcSet=""
           />
         </div>
-        <div className="h-20 w-20 rounded-full bg-green-200">
-          <div className="h-10 w-10 rounded-full bg-green-400 "></div>
-        </div>
-        <div className="h-auto rounded-xl z-50">
-          <img
-            className="cursor-pointer hover:drop-shadow-2xl bg-clip-border"
-            src={plantImge1}
-            alt="plant1"
-          />
-          <div className="h-40 bottom-0 rounded-md right-0 bg-[#55A785]"></div>
+        <div>
+          <div className="m-4 h-20 items-center justify-center rounded-xl bg-green-300 p-4">
+            <h1 className="font-extrabold">Measure your performance</h1>
+            <p>
+              we connect passionate individuals, we connect passionate
+              individuals
+            </p>
+          </div>
+          <div className="m-4 h-20 items-center justify-center rounded-xl bg-green-300 p-4">
+            <h1 className="font-extrabold">Measure your performance</h1>
+            <p>
+              we connect passionate individuals, we connect passionate
+              individuals
+            </p>
+          </div>
+          <div className="m-4 h-20 items-center justify-center rounded-xl bg-green-300 p-4">
+            <h1 className="font-extrabold">Measure your performance</h1>
+            <p>
+              we connect passionate individuals, we connect passionate
+              individuals
+            </p>
+          </div>
         </div>
       </div>
     </div>
