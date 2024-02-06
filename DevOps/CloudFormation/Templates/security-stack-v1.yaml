@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Security stack for environment-specific resources with Jenkins integration.'
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    AllowedValues:
+      - Testing
+      - Staging
+      - Production
+    Description: 'The name of the environment to set up security groups.'
+
+Resources:
+  JumpServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'Security group for the Jump server with access to all resources'
+      VpcId: 
+        Fn::ImportValue: 
+          !Sub "${EnvironmentName}-VPCID"
+      SecurityGroupIngress:
+        # Assuming SSH access
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: '0.0.0.0/0' # Will restrict this to your IP for enhanced security in future
+      Tags:
+        - Key: Name
+          Value: !Sub '${EnvironmentName}-JumpServerSG'
+
+  BackendSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'Security group for Backend servers and DB with access to Frontend'
+      VpcId: 
+        Fn::ImportValue: 
+          !Sub "${EnvironmentName}-VPCID"
+      Tags:
+        - Key: Name
+          Value: !Sub '${EnvironmentName}-BackendSG'
+      SecurityGroupIngress:
+        - IpProtocol: "-1" # Allows all protocols
+          FromPort: -1 # For all ports
+          ToPort: -1
+          SourceSecurityGroupId: 
+            Fn::ImportValue:
+              !Sub "JenkinsSecurityGroupID" # using exported Jenkins SG ID with this name
+  FrontendSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'Security group for Frontend servers with access to Backend'
+      VpcId: 
+        Fn::ImportValue: 
+          !Sub "${EnvironmentName}-VPCID"
+      SecurityGroupIngress:
+        # Example rule: Allow HTTP and HTTPS from anywhere (will adjust as needed)
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: '0.0.0.0/0'
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: '0.0.0.0/0'
+        - IpProtocol: "-1" # Allows all protocols
+          FromPort: -1 # For all ports
+          ToPort: -1
+          SourceSecurityGroupId: 
+            Fn::ImportValue:
+              !Sub "JenkinsSecurityGroupID" # using exported Jenkins SG ID 
+      SecurityGroupEgress:
+        # Allow all outbound traffic to BackendSecurityGroup
+        - IpProtocol: '-1'
+          FromPort: -1
+          ToPort: -1
+          DestinationSecurityGroupId: 
+            Ref: BackendSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub '${EnvironmentName}-FrontendSG'
+
+Outputs:
+  JumpServerSGId:
+    Description: "Security Group ID for the Jump server"
+    Value: !Ref JumpServerSecurityGroup
+
+  BackendSGId:
+    Description: "Security Group ID for Backend servers"
+    Value: !Ref BackendSecurityGroup
+
+  FrontendSGId:
+    Description: "Security Group ID for Frontend servers"
+    Value: !Ref FrontendSecurityGroup
