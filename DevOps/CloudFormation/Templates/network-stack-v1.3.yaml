@@ -1,0 +1,213 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AWS infrastructure for Testing, Staging, and Production environments with public subnets.'
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    AllowedValues:
+      - Testing
+      - Staging
+      - Production
+    Description: 'Select the environment to deploy the resources.'
+  
+  #DefaultAZ:
+ #   Description: The default availability zone to use if the third AZ is not available.
+  #  Type: String
+  #  Default: ''  # default this to a specific AZ 
+
+Mappings:
+  EnvironmentCidrBlocks:
+    Testing:
+      VpcCidr: '10.0.0.0/16'
+      Subnet1Cidr: '10.0.1.0/24'
+      Subnet2Cidr: '10.0.2.0/24'
+      Subnet3Cidr: '10.0.3.0/24'
+    Staging:
+      VpcCidr: '10.1.0.0/16'
+      Subnet1Cidr: '10.1.1.0/24'
+      Subnet2Cidr: '10.1.2.0/24'
+      Subnet3Cidr: '10.1.3.0/24'
+    Production:
+      VpcCidr: '10.2.0.0/16'
+      Subnet1Cidr: '10.2.1.0/24'
+      Subnet2Cidr: '10.2.2.0/24'
+      Subnet3Cidr: '10.2.3.0/24'
+
+#Conditions:
+#  HasThirdAZ: !Not [!Equals [!Select [2, !GetAZs ''], !Ref DefaultAZ]]
+
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !FindInMap [EnvironmentCidrBlocks, !Ref EnvironmentName, VpcCidr]
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Sub '${EnvironmentName}-VPC'
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    DependsOn: VPC
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub '${EnvironmentName}-IGW'
+
+  GatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  # Lambda Execution Role
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaExecutionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:DescribeAvailabilityZones
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  # Lambda Function for AZ Selection
+  AvailabilityZoneLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: python3.8
+      Code:
+        ZipFile: |
+          import boto3
+          import cfnresponse
+          
+          def lambda_handler(event, context):
+              region = event['ResourceProperties']['Region']
+              ec2 = boto3.client('ec2', region_name=region)
+              azs = ec2.describe_availability_zones()['AvailabilityZones']
+              
+              # Select the third AZ if available, otherwise select the second
+              selected_az = azs[2]['ZoneName'] if len(azs) >= 3 else azs[1]['ZoneName']
+              
+              responseData = {'SelectedAZ': selected_az}
+              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
+      Timeout: 30
+
+  # Custom Resource to Invoke Lambda Function
+  AZSelection:
+    Type: Custom::AZSelection
+    Properties:
+      ServiceToken: !GetAtt AvailabilityZoneLambdaFunction.Arn
+      Region: !Ref 'AWS::Region'
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !FindInMap [EnvironmentCidrBlocks, !Ref EnvironmentName, Subnet1Cidr]
+      AvailabilityZone: !Select [0, !GetAZs '']
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub '${EnvironmentName}-PublicSubnet1'
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !FindInMap [EnvironmentCidrBlocks, !Ref EnvironmentName, Subnet2Cidr]
+      AvailabilityZone: !Select [1, !GetAZs '']
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub '${EnvironmentName}-PublicSubnet2'
+
+  PublicSubnet3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !FindInMap [EnvironmentCidrBlocks, !Ref EnvironmentName, Subnet3Cidr]
+      AvailabilityZone: !GetAtt 'AZSelection.SelectedAZ'
+  #    AvailabilityZone: !Select [1, !GetAZs '']
+  #      !If [HasThirdAZ, !Select [2, !GetAZs ''], !Select [0, !GetAZs '']]
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub '${EnvironmentName}-PublicSubnet3'
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub '${EnvironmentName}-RouteTable'
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  # Association of Subnets to Route Table
+  SubnetRouteTableAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  SubnetRouteTableAssociation2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
+  SubnetRouteTableAssociation3:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet3
+      RouteTableId: !Ref PublicRouteTable
+
+Outputs:
+  VPCID:
+    Description: "ID of the VPC created for the selected environment."
+    Value: !Ref VPC
+    Export:
+      Name: !Sub "${EnvironmentName}-VPCID"
+
+  PublicSubnet1ID:
+    Description: "ID of the first Public Subnet in the selected environment."
+    Value: !Ref PublicSubnet1
+    Export:
+      Name: !Sub "${EnvironmentName}-PublicSubnet1ID"
+
+  PublicSubnet2ID:
+    Description: "ID of the second Public Subnet in the selected environment."
+    Value: !Ref PublicSubnet2
+    Export:
+      Name: !Sub "${EnvironmentName}-PublicSubnet2ID"
+
+  PublicSubnet3ID:
+    Description: "ID of the third Public Subnet in the selected environment."
+    Value: !Ref PublicSubnet3
+    Export:
+      Name: !Sub "${EnvironmentName}-PublicSubnet3ID"
