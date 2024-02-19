@@ -37,7 +37,8 @@ Our product will be delivered using an Agile methodology that embraces the DevOp
 Week 1&2, Honnesh Muppala
 Week 3&4, Chandan Gowda
 Week 5&6, Mohammed Moosa
-Week 7&8, Shyam Bist (Current sprint)
+Week 7&8, Shyam Bist 
+Week 9&10, Chandan Gowda 
 Rotating scrum master so that everyone gets to experience the role once.
 
 # Product Owner
@@ -46,6 +47,7 @@ week 1&2, Mohammed Moosa
 Week 3&4, Honnesh Muppala
 Week 5&6, Arun Babu
 Week 7&8, Vinayak Sharma
+Week 9&10, Priyanka Polasi
 Rotating product owner so that everyone gets to experience the role once.
 
 # Team Members
@@ -112,7 +114,7 @@ Update the below to add what the group is using <<>>
 # Testing:
 - Unit testing **Shyam and Moosa**
 - integretation testing **Arun,Chandan and Vinayak**
-- UA  **Honnesh and Priyanka**
+- QA  **Honnesh and Priyanka**
     
 # Environments:
 - staging and production  <<>>
