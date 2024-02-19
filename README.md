@@ -37,7 +37,8 @@ Our product will be delivered using an Agile methodology that embraces the DevOp
 Week 1&2, Honnesh Muppala
 Week 3&4, Chandan Gowda
 Week 5&6, Mohammed Moosa
-Week 7&8, Shyam Bist (Current sprint)
+Week 7&8, Shyam Bist 
+Week 9&10, Chandan Gowda 
 Rotating scrum master so that everyone gets to experience the role once.
 
 # Product Owner
@@ -46,6 +47,7 @@ week 1&2, Mohammed Moosa
 Week 3&4, Honnesh Muppala
 Week 5&6, Arun Babu
 Week 7&8, Vinayak Sharma
+Week 9&10, Priyanka Polasi
 Rotating product owner so that everyone gets to experience the role once.
 
 # Team Members
@@ -112,7 +114,7 @@ Update the below to add what the group is using <<>>
 # Testing:
 - Unit testing **Shyam and Moosa**
 - integretation testing **Arun,Chandan and Vinayak**
-- UA  **Honnesh and Priyanka**
+- QA  **Honnesh and Priyanka**
     
 # Environments:
 - staging and production  <<>>
@@ -135,34 +137,34 @@ Update the below to add what the group is using <<>>
     Do not speak over someone when they are expressing a point, everyone has an equal voice.
     No blame culture.
     Do not be afraid to ask for help, we are all learning.
-    No invisble work.
+    No invisible work.
     Ask questions to make sure you understand the task given to you.
     Try have some fun, team work makes the dream work.
-    Use Agile methodoligies in the project at all times.
+    Use Agile methodologies in the project at all times.
 
 # Meetings
-    Stand-ups will occur on Every <<day/time>> during class and <<day/time>> using Automated bot. Two per week.
+    Stand-ups will occur on Every <<day/time>> during class and <<day/time>> using an Automated bot. Two per week.
     The order that people give their updates will be << 1) What I did yesterday, 2) What I will do today, 3) Mention blockers if any >>.
     Updates will be in the form: What I've done, Impediments, What I plan to do.
     Sprint planning will occur at <<1st Monday of every Sprint>>.
     Please add and update items within << Jira >> a prior to the sprint planning session.
-    Sprint retro will at the end of our sprint on << 2nd Friday of each sprint >> (timebox retro for 1 hour, to be organised by the scrum master).
-    The order that people present their sprint retro updates will be based on The Team 1 list in the Assign_BSc_DevOps_2022.pdf file 
-      on blackboard of those present at the meeting.
-    Points raised in the sprint retro will be noted and posted on the slack channel by the Scrum Master. The Scrum Master is rotated 
+    Sprint retro will at the end of our sprint on << 2nd Friday of each sprint >> (timebox retro for 1 hour, to be organized by the scrum master).
+    The order which people present their sprint retro updates will be based on The Team 1 list in the Assign_BSc_DevOps_2022.pdf file 
+      on the blackboard of those present at the meeting.
+    Points raised in the sprint retro will be noted and posted on the Slack channel by the Scrum Master. The Scrum Master is rotated 
       per team member every week.
     Backlog refinement will happen on << every 2nd Wednesday >> during our sprint.
     Task estimation will be done using << Plannig Poker >>. 
     Come prepared to meetings.
-    Be on time for Stand Ups and meetings.
+    Be on time for stand-ups and meetings.
     Mobile phones on silent.
-    Everyone has equal voice and valuable contribution.
+    Everyone has an equal voice and valuable contribution.
     Keep your language and tone professional at all times.
     Be honest.
 
 # Communication
     Slack is the preferred method of communication.
-    If a demonstration is required use Loom, record the session and upload to the Slack channel.
+    If a demonstration is required use Loom, record the session, and upload to the Slack channel.
     Raise a problem as soon as you see it.
     Respect each other and understand differences in knowledge.
     All team documents are to be created using Markdown language and shared on GitHub.
@@ -183,7 +185,7 @@ Update the below to add what the group is using <<>>
     Don't be afraid to give constructive criticism, as long as it is constructive.
     Solve roadblocks within the team. If the impediment can’t be solved within the team then give it to the Scrum Master.
     The Scrum Master role rotates each week 
-    Our branching stategy will start with << Feature -> Develepment -> Main >>
+    Our branching strategy will start with << Feature -> Development -> Main >>
 
 # Estimating Story Points
 The teams team's velocity is calculated by <<Team decides>>.
@@ -191,4 +193,4 @@ The teams team's velocity is calculated by <<Team decides>>.
 The teams current story point velocity is "N/A". <<Update the velocity as the weeks progress>>
 
 # Definition of Ready/Done
-<< 1. Code implementated 2. Documention, 3. Testing, 4. Met the buisness requirement>>
+<< 1. Code implemented 2. Documentation, 3. Testing, 4. Met the business requirement>>
