@@ -32,9 +32,12 @@ Our product will be delivered using an Agile methodology that embraces the DevOp
 
 # Scrum Master
 <<list week number, student name>>
-week 1&2, Honnesh Muppala
+Week 1&2, Honnesh Muppala
 Week 3&4, Chandan Gowda
 Week 5&6, Mohammed Moosa
+Week 7&8, Shyam Bist
+Week 9&10, Chandan Gowda
+Week 11&12, Arun Babu
 Rotating scrum master so that everyone gets to experience the role once.
 
 # Product Owner
@@ -42,6 +45,9 @@ Rotating scrum master so that everyone gets to experience the role once.
 week 1&2, Mohammed Moosa
 Week 3&4, Honnesh Muppala
 Week 5&6, Arun Babu
+Week 7&8, Vinayak Sharma
+Week 9&10, Priyanka Polasi
+Week 11&12, Chandan Gowda
 Rotating product owner so that everyone gets to experience the role once.
 
 # Team Members
