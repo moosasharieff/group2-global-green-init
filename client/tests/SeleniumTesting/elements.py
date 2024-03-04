@@ -40,4 +40,4 @@ class Password_Field_Elements(object):
         WebDriverWait(driver, 10).until(lambda driver: driver.find_element(*self.forRead))
         # Extracting element value
         element = driver.find_element(*self.forRead)
-        return element.text
+        return element
