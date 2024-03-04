@@ -3,7 +3,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from elements import Email_Field_Elements, Password_Field_Elements
-from locators import PageLocators
+from locators import PageLocators, ContentPageLocators
 
 class Email_Element(Email_Field_Elements):
     """ This class get the search text from the specified locator """
@@ -70,4 +70,26 @@ class SignUpPage(HomePage):
     def get_passwordError(self):
         """ Fetchs and give the password error """
         element = self.driver.find_element(*PageLocators.PASSWORD_ERR)
+        return element
+
+class ContentPage(HomePage):
+    """ This is the page we see after signing Up """
+
+    def profile_cirlce(self):
+        """ This contains the information inside the profile circle """
+        element = self.wait.until(EC.element_to_be_clickable(ContentPageLocators.CIRCLE_LINK))
+        return element
+
+    def get_email(self):
+        """ Fetches the email address after logging in """
+        dropdown = self.profile_cirlce()
+        dropdown.click()
+        element = self.wait.until(EC.element_to_be_clickable(ContentPageLocators.LOGGED_EMAIL))
+        return element
+
+    def get_logout_button(self):
+        """ Fetches the logout button """
+        dropdown = self.profile_cirlce()
+        dropdown.click()
+        element = self.wait.until(EC.element_to_be_clickable(ContentPageLocators.LOGOUT_BUTTON))
         return element

@@ -4,6 +4,7 @@ import unittest
 from faker import Faker
 from selenium import webdriver
 import pages as page
+from locators import PageLocators
 
 class Nausicca_Home_Page(unittest.TestCase):
     """ Test cases will be written here """
@@ -36,6 +37,9 @@ class Nausicca_SignUp_Page(unittest.TestCase):
 
         # To generate fake data
         self.fake = Faker()
+
+        # Content page after the user sign ups
+        self.content_page = page.ContentPage(self.driver)
 
     def test_verify_if_email_field_present_correctly(self):
         """ Test 1. The email field is present """
@@ -105,6 +109,62 @@ class Nausicca_SignUp_Page(unittest.TestCase):
 
         # Assertions
         self.assertIn(pwd_error_msg, "At least 8 characters")
+
+    def test_verify_user_is_unable_to_sign_up_with_password_that_does_not_meet_the_password_complexity_requirements(self):
+        """ Test 7. Testing with different password requirement and confirm if password is complexity works """
+
+        self.signUp_page.pwd_element = "Testing@1"
+        self.signUp_page.click_submit_button()
+
+        # Assertions
+        self.assertTrue("Testing@1")
+
+    def test_Verify_that_the_user_is_able_to_successfully_sign_up_with_valid_details(self):
+        """ Test 8. Test if user is able to sign up with valid details """
+
+        email = self.fake.email()
+        self.signUp_page.email_element = email
+        self.signUp_page.pwd_element = self.fake.password()
+        self.signUp_page.click_submit_button()
+
+        # Assertions
+        self.assertIsNotNone(self.content_page.profile_cirlce())
+        self.assertEquals(self.content_page.get_email().text, email)
+
+    def test_Verify_that_the_user_is_redirected_to_the_correct_page_after_successfully_signing_up(self):
+        """ Test 9. Test if user is able to redirect to correct page after sign up """
+        email = self.fake.email()
+        self.signUp_page.email_element = email
+        self.signUp_page.pwd_element = self.fake.password()
+        self.signUp_page.click_submit_button()
+
+        # Assertions
+        self.assertIsNotNone(self.content_page.profile_cirlce())
+
+    def test_verify_if_error_message_is_displayed_if_user_tries_to_sign_up_with_an_email_address_that_has_already_been_registered(self):
+        """ Test 10. Test if error message is displayed if existing user tries to register again """
+
+        # Sign Up Process
+        email = self.fake.email() # 1234@gmail.com
+        password = self.fake.password() # Abcde@99
+
+
+        # Sign Up
+        self.signUp_page.email_element = email
+        self.signUp_page.pwd_element = password
+        self.signUp_page.click_submit_button()
+        # Logout
+        # self.content_page.profile_cirlce().click()
+        self.content_page.get_logout_button().click()
+        # Signing up again with same credentials
+        self.signUp_page.navigate_to_sign_up_page()
+        self.signUp_page.email_element = email
+        self.signUp_page.pwd_element = password
+        self.signUp_page.click_submit_button()
+
+        # Assertions
+        self.assertIsNotNone(self.driver.find_element(*PageLocators.SIGNUP_ERR))
+        self.assertEqual(self.driver.find_element(*PageLocators.SIGNUP_ERR).text,"Something went wrong, please try again later")
 
     def tearDown(self) -> None:
         self.driver.quit()

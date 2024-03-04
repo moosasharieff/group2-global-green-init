@@ -12,4 +12,10 @@ class PageLocators(object):
     SUBMIT = (By.NAME, "action") # Entering from
     SIGNIN = (By.XPATH, "//button[@type='submit']") # Entering from homepage to signIn page
     SIGNUP = (By.XPATH, "//a[@class='cc3100fd0 c316efbcd']") # Entering from signIn page to singUp page
+    SIGNUP_ERR = (By.XPATH, "//p[@class='ce3cf3592 c409e6d91']")
 
+
+class ContentPageLocators(object):
+    CIRCLE_LINK = (By.XPATH, "//div[@class='h-12 w-12 cursor-pointer rounded-full bg-black']")
+    LOGGED_EMAIL = (By.XPATH, "//div[@class='grid grid-rows-2']//p")
+    LOGOUT_BUTTON = (By.XPATH, "//div[@class='grid grid-rows-2']//button")
