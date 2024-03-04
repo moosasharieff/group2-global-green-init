@@ -1,4 +1,5 @@
-from selenium.webdriver.common.by import By
+
+
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from elements import Email_Field_Elements, Password_Field_Elements
@@ -27,8 +28,9 @@ class HomePage(BasePage):
         return "Nausicca's" in self.driver.title
 
     def click_signIn_button(self):
-        element = self.driver.find_element(*PageLocators.SUBMIT)
-        element.click()
+        WebDriverWait(self.driver, 10).until(lambda driver: self.driver.find_element(*PageLocators.SIGNIN))
+        element = self.driver.find_element(*PageLocators.SIGNIN)
+        return element
 
     def get_custom_txt_present(self, xpath):
         element = self.wait.until(EC.presence_of_element_located((xpath[0], xpath[1])))
@@ -50,10 +52,10 @@ class SignUpPage(HomePage):
         signUpButton = self.wait.until(EC.element_to_be_clickable(PageLocators.SIGNUP))
         signUpButton.click()
 
-    def welcome_text(self):
-        """ Display of welcome text """
+    def welcome_element(self):
+        """ Display of welcome Element """
         element = self.wait.until(EC.element_to_be_clickable(PageLocators.WELCOME))
-        return element.text
+        return element
 
     def click_submit_button(self):
         """ Clicks on Continue button to proceed with SignUp """
@@ -62,10 +64,10 @@ class SignUpPage(HomePage):
 
     def get_emailError(self):
         """ Fetchs and give the email error """
-        element = self.driver.find_element(By.ID, 'error-element-email')
-        return element.text
+        element = self.driver.find_element(*PageLocators.EMAIL_ERR)
+        return element
 
     def get_passwordError(self):
         """ Fetchs and give the password error """
-        element = self.driver.find_element(By.XPATH, "//li[@class='c89df7c73 cd75ef6da']")
-        return element.text
+        element = self.driver.find_element(*PageLocators.PASSWORD_ERR)
+        return element

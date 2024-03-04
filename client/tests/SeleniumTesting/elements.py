@@ -1,8 +1,6 @@
 
 
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from locators import PageLocators
 
 class Email_Field_Elements(object):
     """ This class is to initiate set and get attributes for all page elements """
@@ -22,7 +20,7 @@ class Email_Field_Elements(object):
         WebDriverWait(driver, 10).until(lambda driver: driver.find_element(*self.forRead))
         # Extracting element value
         element = driver.find_element(*self.forRead)
-        return element.text
+        return element
 
 class Password_Field_Elements(object):
     """ This class is to initiate set and get attributes for all page elements """
