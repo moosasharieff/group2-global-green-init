@@ -41,6 +41,7 @@ Week 5&6, Mohammed Moosa
 Week 7&8, Shyam Bist
 Week 9&10, Chandan Gowda
 Week 11&12, Arun Babu
+week 13&14, vinayak 
 
 Rotating scrum master so that everyone gets to experience the role once.
 
@@ -52,6 +53,7 @@ Week 5&6, Arun Babu
 Week 7&8, Vinayak Sharma
 Week 9&10, Priyanka Polasi
 Week 11&12, Chandan Gowda
+Week 13&14, Honnesh Muppala
 
 Rotating product owner so that everyone gets to experience the role once.
 
@@ -92,6 +94,7 @@ Regex for cleansing and validation of data before sending to the database.
  - Project Website link: https://v1.globalgreeninit.world/
  - Jira: https://group2ausicaas.atlassian.net/jira/software/projects/GREEN/boards/1
  - Confluence: https://group2ausicaas.atlassian.net/wiki/spaces/TDWMZ/pages
+ - Stackhawk: https://app.stackhawk.com/applications
 
 # More Information
 For more information visit JIRA Dashboard and Confluence 
