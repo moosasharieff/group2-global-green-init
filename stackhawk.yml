@@ -1,25 +1,49 @@
-# -- stackhawk configuration for  --
-app:
-  # -- An applicationId obtained from the StackHawk platform. --
-  applicationId: b82341fc-754d-4b20-b1e8-e2a6c8370641 # (required)
-  # -- The environment for the applicationId defined in the StackHawk platform. --
-  env: Development # (required)
-  # -- The url of your application to scan --
-  host: https://v1.globalgreeninit.world # (required)
+
+  # Example app.authentication yaml configuration
+  # How should the scanner authenticate to your application when performing a scan.
+  authentication:
+    # A regex to match against http responses from pages in the web application to determine if the scanned pages user 
+    # session is still logged in to the app, provided as a string (ex. `"\\Qsigned in as\\E"`).
+    loggedInIndicator: "HTTP.*2[0-9][0-9]\\s*O[kK](\\s*)|HTTP.*3[0-9][0-9].*"
+    # A regex to match against http responses from pages in the web application to determine if the scanned pages user 
+    # session is logged out of the app, provided as a string
+    loggedOutIndicator: "HTTP.*4[0-9][0-9](\\s*)Unauthorized.*" 
+
+  # -- Customized Configuration for Authentication Scripting --
+    # Specify the parameters required for POSTing to the token URL
+    # parementers and credentials generally function the same, only credentials will be redacted throughout the StackHawk platform.
+    script:
+      name: auth0-client-credentials.js
+      parameters:
+        issuer: https://{YOUR_DOMAIN}/oauth/token
+        audience: {YOUR_API_IDENTIFIER}
+        grant_type: client_credentials
+      credentials:
+        client_id: {YOUR_CLIENT_ID}
+        client_secret: {YOUR_CLIENT_SECRET}
+
+  # -- Default JSON Reponse Configuration --  
+    tokenExtraction:
+      type: TOKEN_PATH
+      value: access_token
+      # Configuration Docs: https://docs.stackhawk.com/hawkscan/configuration/#appauthenticationtokenextraction
+    tokenAuthorization:
+      type: HEADER
+      value: Authorization
+      tokenType: Bearer
+      # Configuration Docs: https://docs.stackhawk.com/hawkscan/configuration/#appauthenticationtokenauthorization
+    testPath:
+      path: /api/external
+      success: '.*200.*'
+      # Configuration Docs: https://docs.stackhawk.com/hawkscan/configuration/#appauthenticationtestpath
 
 
-# -- Customized Configuration for GraphQL/SOAP/OpenAPI, add here --
-  # openApiConf:
-  #   path: /swagger.json # OR...
-#       filePath: openApi.json
-  # autoPolicy: true
-  # autoInputVectors: true
-  # Configuration Docs: https://docs.stackhawk.com/hawkscan/configuration/
-
-# -- If Authenticated Scanning is needed, add here --
-  # Authenticated Scanning Docs: https://docs.stackhawk.com/hawkscan/authenticated-scanning.html
-  # Authenticated Scanning Repo: https://github.com/kaakaww/scan-configuration/tree/main/Authentication
-
-# -- Help Section --
-  # Docs: https://docs.stackhawk.com/
-  # Contact Support: support@stackhawk.com
+  #-- StackHawk Pathing to Your Authentication Script --
+  # Scripts should be in a folder structure denoting their type 
+  # The location of the script directory should be relative to the stackhawk.yml file.
+  hawkAddOn:
+    scripts:
+    - name: auth0-client-credentials.js
+      type: authentication
+      path: scripts
+      language: JAVASCRIPT
