@@ -3,7 +3,7 @@ import unittest
 from faker import Faker
 from selenium import webdriver
 import pages as page
-from locators import SignUpPageLocators
+from locators import SignUpPageLocators, VARIABLES
 
 class Nausicca_Home_Page(unittest.TestCase):
     """ Test cases will be written here """
@@ -11,7 +11,7 @@ class Nausicca_Home_Page(unittest.TestCase):
     def setUp(self) -> None:
 
         self.driver = webdriver.Firefox()
-        self.driver.get("https://v2.globalgreeninit.world")
+        self.driver.get(VARIABLES.URL)
 
     def test_verify_if_home_page_is_opening(self):
         main_page = page.HomePage(self.driver)
@@ -178,8 +178,6 @@ class Nausicca_SignUp_Page(unittest.TestCase):
         # Assertions
         self.assertEqual(self.signUp_page.welcome_element().text, "Welcome")
         self.assertEqual(self.signUp_page.get_signIn_button().text, "Sign up") # Sign Up button only visible at Sign in section
-
-
 
 
     def tearDown(self) -> None:
