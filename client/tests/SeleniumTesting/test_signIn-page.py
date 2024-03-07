@@ -120,3 +120,6 @@ class Nausicca_SignIn_Page(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.driver.quit()
+
+if __name__ == '__main__':
+    unittest.main()

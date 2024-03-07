@@ -115,15 +115,7 @@ class ContentPage(HomePage):
         return element
 
 class SignInPage(SignUpPage):
-    """
-    # Elements to be present in the sign-in page
-    1. Email textbox (Element present)
-    2. Password textbox (Element present)
-    3. Forgot password button
-    4. SignUp button
-    5. email error
-    6. password error
-    """
+    """ Elements to be present in the sign-in page """
     email = SignIn_Email_Element()
     password = SignInPassword_Element()
     forgot_email_button = Forgot_Element()
