@@ -5,14 +5,18 @@ from selenium import webdriver
 import pages as page
 from locators import SignUpPageLocators, SignInPageLocators, VARIABLES
 from faker import Faker
+from selenium.webdriver.chrome.options import Options
 
 class Nausicca_Home_Page(unittest.TestCase):
     """ Test cases will be written here """
 
     def setUp(self) -> None:
 
-        self.driver = webdriver.Chrome()
-        self.driver.get("https://v2.globalgreeninit.world")
+        # Setting for running Chrome in headless
+        chrome_options = Options()
+        chrome_options.add_argument("--headless=new")  # for Chrome >= 109
+        self.driver = webdriver.Chrome(options=chrome_options)
+        self.driver.get(VARIABLES.URL)
 
     def test_verify_if_home_page_is_opening(self):
         main_page = page.HomePage(self.driver)
@@ -27,7 +31,11 @@ class Nausicca_SignIn_Page(unittest.TestCase):
 
     def setUp(self) -> None:
         """ Initialization of the driver """
-        self.driver = webdriver.Chrome()
+
+        # Setting for running Chrome in headless
+        chrome_options = Options()
+        chrome_options.add_argument("--headless=new")  # for Chrome >= 109
+        self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.get(VARIABLES.URL)
 
         # Navigate to SignIn page
