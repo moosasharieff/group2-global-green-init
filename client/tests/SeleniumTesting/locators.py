@@ -25,6 +25,12 @@ class ContentPageLocators(object):
     CIRCLE_LINK = (By.XPATH, "//div[@class='h-12 w-12 cursor-pointer rounded-full bg-black']")
     LOGGED_EMAIL = (By.XPATH, "//div[@class='grid grid-rows-2']//p")
     LOGOUT_BUTTON = (By.XPATH, "//div[@class='grid grid-rows-2']//button")
+    LOGO_IMG = (By.XPATH, "//li[@class='h-12 w-12']")
+    ORGANIZATION = (By.XPATH, "//div[@class='grid h-auto grid-cols-2 place-items-center gap-8 rounded-xl shadow-md md:ml-36 md:mt-10 md:w-[80%]']")
+    CARDS = (By.XPATH, "//img[@class='rounded-xl object-fill']")
+    CARD_TITLE = (By.XPATH, "//h1[@class='mb-4 flex flex-row place-items-center gap-2']")
+    # FUND_TITLE = (By.XPATH, "//h1[@class='font-extrabold']")
+    CARD_AMT = (By.XPATH, '//*[@id="root"]/div/div/div[3]/div[4]/div/div[2]/div/div[2]/button')
 
 class SignInPageLocators:
     SIGNIN = (By.XPATH, "//button[@type='submit']")
