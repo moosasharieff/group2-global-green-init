@@ -1,4 +1,6 @@
 # Project Template
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmoosasharieff%2Fgroup2-global-green-init.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmoosasharieff%2Fgroup2-global-green-init?ref=badge_shield)
+
 
 **MScDevOps Assign:** group2-global-green-init 
 
@@ -203,3 +205,7 @@ The teams current story point velocity is "N/A". <<Update the velocity as the we
 # Definition of Ready/Done
 <<List criteria that are common here>>
 << 1. Code implementated 2. Documention, 3. Testing, 4. Met the buisness requirement>>
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmoosasharieff%2Fgroup2-global-green-init.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmoosasharieff%2Fgroup2-global-green-init?ref=badge_large)
