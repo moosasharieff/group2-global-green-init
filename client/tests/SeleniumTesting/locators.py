@@ -47,3 +47,16 @@ class SignInPageLocators:
     CARDS = (By.XPATH, "//img[@class='rounded-xl object-fill']")
     BACK_TO_LOGIN = (By.XPATH, "//button[@value='back-to-login']")
     EMAIL_CONFIRMATION = (By.XPATH, "//h1[@role='presentation']")
+
+class FundCardLocators(object):
+    GRANT_APPLICATION = (By.XPATH, "//h2[@class='text-lg mb-4']")
+    EMAIL_TEXTBOX = (By.XPATH, "//input[@id='email']")
+    PROJECT_DESCRIPTION_LABEL = (By.XPATH, "//label[@for='projectDescription']")
+    PROJECT_DESCRIPTION_TEXTBOX = (By.XPATH, "//textarea[@id='projectDescription']")
+    AMOUT_LABEL = (By.XPATH, "//label[@for='requestedAmount']")
+    AMOUT_TEXTBOX = (By.XPATH, "//input[@id='requestedAmount']")
+    SUBMIT = (By.XPATH, "//button[@type='submit']")
+    CANCEL = (By.XPATH, "//button[@type='button']")
+    RIGHT_FOOTER = (By.XPATH, "//div[@class='links']")
+    RIGHTS_RESERVED = (By.XPATH, "//div[@class='copyright']")
+    CONTACT = (By.XPATH, "//div[@class='contact']")
