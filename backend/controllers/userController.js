@@ -1,10 +1,13 @@
 const ClientRequest = require('../models/ClientRequest');
+const GrantsAll = require('../models/GrantSchema')
+const AdminGrantRequests = require('../models/GrantSchema')
 
 const createClientRequest = async (req, res) => {
-  const { username, email, description, requestedAmount } = req.body;
+  const { granterName, username, email, description, requestedAmount } = req.body;
 
   try {
     const newClientRequest = new ClientRequest({
+      granterName,
       username,
       email,
       description,
@@ -20,4 +23,15 @@ const createClientRequest = async (req, res) => {
   }
 };
 
-module.exports = createClientRequest 
+
+const getAllGrants = async(req, res) => {
+  const allData = await GrantsAll.find();
+  res.send(allData);
+}
+
+const getAllClientRequest = async(req, res) => {
+  const allData = await ClientRequest.find();
+  res.send(allData);
+}
+
+module.exports = { createClientRequest, getAllGrants, getAllClientRequest } 
