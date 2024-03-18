@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 function Navbar() {
   const { logout, user } = useAuth0();
   const [showPopup, setShowPopup] = useState(false);
-  const userRole = user['http://localhost:5173//roles'];
+  const userRole = user[`${process.env.API_BASE_URL}/roles`];
   const togglePopup = () => {
     setShowPopup(!showPopup);
   };

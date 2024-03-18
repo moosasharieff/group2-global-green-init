@@ -32,7 +32,7 @@ function GrantForm({ closeModal, cardData }) {
 
     try {
       // Make the Axios POST request
-      const response = await axios.post('http://localhost:6969/api/user-requests', grantData);
+      const response = await axios.post(`${process.env.API_BASE_URL}/api/user-requests`, grantData);
       
       console.log('Response from server:', response.data);
       // Handle the response as needed

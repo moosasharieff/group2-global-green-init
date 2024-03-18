@@ -11,17 +11,20 @@ function App() {
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [loading, setLoading] = useState(true);
   const userRoles = user && user['https://shav-xmdaoxl28shfvujc.eu.auth0.com/roles'];
+  const base_uri = process.env.REACT_APP_API_BASE_URL;
+
+  console.log(base_uri)
 
   const getUserRoles = async () => {
     var options = {
       method: 'POST',
-      url: 'https://shav-xmdaoxl28shfvujc.eu.auth0.com/oauth/token',
+      url: process.env.REACT_APP_TOKEN_URI,
       headers: {'content-type': 'application/x-www-form-urlencoded'},
       data: new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: 'EiDSGIyJ2oYN1kd6Xs3WPmbzmzzww5Dr',
-        client_secret: '_9gmPdHEoqRGHVDFMzne5Dvfm37WrRHGFQnjnoqyj5PPtLq3be7BRWkd3bkYGPaQ',
-        audience: 'https://shav-xmdaoxl28shfvujc.eu.auth0.com/api/v2/'
+        client_id: process.env.REACT_APP_ROLES_CLIENT_ID,
+        client_secret: process.env.REACT_APP_CLIENT_SECRET,
+        audience: process.env.REACT_APP_ROLES_AUDIENCE
       })
     };
     
@@ -55,8 +58,7 @@ function App() {
         <Routes>
           {isAuthenticated ? (
             <>
-            {/* for user roles change the url based on your namespace (domain name) */}
-              {user && user['http://localhost:5173//roles']?.includes('superuser') ? ( 
+              {user && user[`${process.env.REACT_APP_API_BASE_URL}/roles`]?.includes('superuser') ? ( 
                 <Route
                   path="/"
                   element={<Navigate to="/admin" />}
@@ -64,7 +66,6 @@ function App() {
               ) : (
                 <Route path="/" element={<LandingPage />} />
               )}
-              {/* Regular user routes */}
               <Route path="/admin" element={<AdminPage />} />
             </>
           ) : (

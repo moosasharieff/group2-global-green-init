@@ -12,7 +12,7 @@ function LandingPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:6969/api/getGrants');
+        const response = await axios.get(`${process.env.API_BASE_URL}/api/getGrants`);
         setGratnerData(response.data);
         console.log(response.data)
       } catch (error) {

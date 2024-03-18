@@ -7,10 +7,13 @@ const AdminPage = () => {
   const [clientRequest, setClientRequest] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
+      const api_url = `${process.env.REACT_APP_API_BASE_URL}api/admin-client-requests`;
+
+      console.log(api_url)
       try {
         const response = await axios.get('http://localhost:6969/api/admin-client-requests');
         setClientRequest(response.data);
-        console.log(response.data)
+        console.log(response)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
