@@ -2,8 +2,8 @@ import time
 
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from elements import Email_Field_Elements, Password_Field_Elements, Forgot_Password_Field_Elements
-from locators import HomePageLocators, ContentPageLocators, SignUpPageLocators, SignInPageLocators
+from elements import Email_Field_Elements, Password_Field_Elements, Forgot_Password_Field_Elements, Fund_Project_Description_Field_Elements, Fund_Amount_Field_Elements
+from locators import HomePageLocators, ContentPageLocators, SignUpPageLocators, SignInPageLocators, FundCardLocators
 
 class SignUp_Email_Element(Email_Field_Elements):
     """ This class get the search text from the specified locator """
@@ -28,6 +28,16 @@ class SignInPassword_Element(Password_Field_Elements):
 class Forgot_Element(Forgot_Password_Field_Elements):
     """ This class get the search text from the specified locator """
     forEdit = SignInPageLocators.EMAIL_FORGOT_PASSWORD
+
+class Fund_Project_Desc_Element(Fund_Project_Description_Field_Elements):
+    """ This class get the search text from the specified locator """
+    forEdit = FundCardLocators.PROJECT_DESCRIPTION_TEXTBOX
+    forRead = FundCardLocators.PROJECT_DESCRIPTION_LABEL
+
+class Fund_Amt_Element(Fund_Amount_Field_Elements):
+    """ This class get the search text from the specified locator """
+    forEdit = FundCardLocators.AMOUT_TEXTBOX
+    forRead = FundCardLocators.AMOUT_LABEL
 
 class BasePage(object):
     """ Base class to initialize the driver for every test case """
@@ -114,6 +124,24 @@ class ContentPage(HomePage):
         element = self.wait.until(EC.element_to_be_clickable(ContentPageLocators.LOGOUT_BUTTON))
         return element
 
+    def check_if_cards_present(self):
+        element = self.wait.until(EC.element_to_be_clickable(ContentPageLocators.CARDS))
+        return element.tag_name == "img"
+
+    def check_card_title(self):
+        element = self.driver.find_element(*ContentPageLocators.CARD_TITLE)
+        return element
+
+    def check_fund_title(self):
+        element = self.driver.find_element(*ContentPageLocators.FUND_TITLE)
+        return element
+
+    def click_amount_button(self):
+        element = self.wait.until(EC.element_to_be_clickable(ContentPageLocators.CARD_AMT))
+        element.click()
+
+
+
 class SignInPage(SignUpPage):
     """ Elements to be present in the sign-in page """
     email = SignIn_Email_Element()
@@ -145,3 +173,14 @@ class SignInPage(SignUpPage):
 
         element = self.driver.find_element(*SignInPageLocators.EMAIL_CONFIRMATION)
         return element
+
+class FundCardPage(ContentPage):
+
+    project_desc = Fund_Project_Desc_Element()
+    fund_amount = Fund_Amt_Element()
+
+    def click_submit_button(self):
+        """ Clicks on Continue button to proceed with SignUp """
+        element = self.wait.until(EC.element_to_be_clickable(FundCardLocators.SUBMIT))
+        element.click()
+
