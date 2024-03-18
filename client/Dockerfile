@@ -15,6 +15,6 @@ FROM nginx:alpine
 # Copy the built application from the builder stage to the Nginx server directory
 COPY --from=builder /app/dist /usr/share/nginx/html
 # Expose port 80
-EXPOSE 80
+EXPOSE 81
 # Command to start Nginx when the container starts
 CMD ["nginx", "-g", "daemon off;"]
