@@ -135,6 +135,7 @@ class Nausicca_User_Home_Page(unittest.TestCase):
         self.card.click_submit_button()
 
         # Switching to fetch text from Alert
+        time.sleep(1)
         alert_obj = self.driver.switch_to.alert
         text = alert_obj.text
         alert_obj.accept()

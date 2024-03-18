@@ -30,7 +30,7 @@ class ContentPageLocators(object):
     CARDS = (By.XPATH, "//img[@class='rounded-xl object-fill']")
     CARD_TITLE = (By.XPATH, "//h1[@class='mb-4 flex flex-row place-items-center gap-2']")
     # FUND_TITLE = (By.XPATH, "//h1[@class='font-extrabold']")
-    CARD_AMT = (By.XPATH, '//*[@id="root"]/div/div/div[3]/div[4]/div/div[2]/div/div[2]/button')
+    CARD_AMT = (By.XPATH, "//*[@id='root']/div/div/div[3]/div[11]/div/div[2]/div/div[2]/button")
 
 class SignInPageLocators:
     SIGNIN = (By.XPATH, "//button[@type='submit']")
