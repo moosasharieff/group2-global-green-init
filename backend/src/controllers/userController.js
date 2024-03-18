@@ -1,6 +1,6 @@
-const ClientRequest = require('../src/models/ClientRequest');
-const GrantsAll = require('../src/models/GrantSchema')
-const AdminGrantRequests = require('../src/models/GrantSchema')
+const ClientRequest = require('../models/ClientRequest')
+const GrantsAll = require('../models/GrantSchema')
+const AdminGrantRequests = require('../models/GrantSchema')
 
 /**
  * Creates a new client request.
