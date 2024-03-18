@@ -11,7 +11,7 @@ const AdminPage = () => {
 
       console.log(api_url)
       try {
-        const response = await axios.get('http://localhost:6969/api/admin-client-requests');
+        const response = await axios.get(api_url);
         setClientRequest(response.data);
         console.log(response)
       } catch (error) {

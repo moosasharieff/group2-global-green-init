@@ -11,8 +11,10 @@ function LandingPage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const API_BASE_URL = `${process.env.REACT_APP_API_BASE_URL}api/getGrants`;
+      console.log(API_BASE_URL)
       try {
-        const response = await axios.get(`${process.env.API_BASE_URL}/api/getGrants`);
+        const response = await axios.get(API_BASE_URL);
         setGratnerData(response.data);
         console.log(response.data)
       } catch (error) {

@@ -10,16 +10,15 @@ import axios from "axios";
 function App() {
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [loading, setLoading] = useState(true);
-  const userRoles = user && user['https://shav-xmdaoxl28shfvujc.eu.auth0.com/roles'];
-  const base_uri = process.env.REACT_APP_API_BASE_URL;
-
-  console.log(base_uri)
+  const base_uri = `${process.env.REACT_APP_URL}/roles`;
+  const userRoles = user && user[base_uri];
+  console.log(userRoles)
 
   const getUserRoles = async () => {
     var options = {
       method: 'POST',
       url: process.env.REACT_APP_TOKEN_URI,
-      headers: {'content-type': 'application/x-www-form-urlencoded'},
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: new URLSearchParams({
         grant_type: 'client_credentials',
         client_id: process.env.REACT_APP_ROLES_CLIENT_ID,
@@ -27,7 +26,7 @@ function App() {
         audience: process.env.REACT_APP_ROLES_AUDIENCE
       })
     };
-    
+
     axios.request(options).then(function (response) {
       console.log(response.data);
     }).catch(function (error) {
@@ -58,7 +57,8 @@ function App() {
         <Routes>
           {isAuthenticated ? (
             <>
-              {user && user[`${process.env.REACT_APP_API_BASE_URL}/roles`]?.includes('superuser') ? ( 
+              {console.log(user)}
+              {user && user[base_uri]?.includes('superuser') ? (
                 <Route
                   path="/"
                   element={<Navigate to="/admin" />}
