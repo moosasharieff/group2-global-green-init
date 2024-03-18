@@ -3,6 +3,10 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+/**
+ * Connects to the MongoDB database.
+ * @returns {mongoose.Connection} The MongoDB connection object.
+ */
 async function connectDB() {
   const url = process.env.MONGO_URI;
 
