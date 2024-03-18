@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
 function GrantForm({ closeModal, cardData }) {
   const { user } = useAuth0();
-  const [projectDescription, setProjectDescription] = useState('');
+  const [description, setDescription] = useState('');
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e) => {
@@ -11,7 +12,7 @@ function GrantForm({ closeModal, cardData }) {
     setInputValue(newInputValue);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
 
     const requestedAmount = parseFloat(inputValue);
@@ -22,11 +23,26 @@ function GrantForm({ closeModal, cardData }) {
     }
 
     const grantData = {
-      userName: user.email,
+      granterName: cardData.name,
+      username: user.email,
       email: user.email,
-      projectDescription,
+      description,
       requestedAmount,
     };
+
+    try {
+      // Make the Axios POST request
+      const response = await axios.post('http://localhost:6969/api/user-requests', grantData);
+      
+      console.log('Response from server:', response.data);
+      // Handle the response as needed
+
+      closeModal();
+      alert('Your grant application has been submitted!');
+    } catch (error) {
+      console.error('Error making Axios POST request:', error);
+      // Handle errors
+    }
 
     console.log('Grant Application Data:', grantData);
 
@@ -70,8 +86,8 @@ function GrantForm({ closeModal, cardData }) {
             </label>
             <textarea
               id="projectDescription"
-              value={projectDescription}
-              onChange={(e) => setProjectDescription(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               className="w-full h-24 px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-green-500 focus:ring-1"
               required
             />

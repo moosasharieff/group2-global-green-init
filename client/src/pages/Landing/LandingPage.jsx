@@ -1,10 +1,27 @@
 import Navbar from "../../components/navbar/Navbar";
 import Card from "../../components/Card/Card";
-import granterData from "../../constants/Granters";
 import plantImge2 from "../../assets/plant2.png";
 import { IoFolderOpenOutline } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 function LandingPage() {
+
+  const [granterData, setGratnerData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:6969/api/getGrants');
+        setGratnerData(response.data);
+        console.log(response.data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="grid h-screen w-full grid-cols-1 gap-2 bg-neutral-50">
       <div className="h-16 bg-neutral-50">
@@ -46,11 +63,11 @@ function LandingPage() {
       <div className="row-span-2 grid w-full place-items-center gap-6 bg-neutral-50 p-4 md:row-span-8 md:grid-cols-4 md:p-36">
         {granterData.map((granter) => (
           <Card
-            key={granter.id}
+            key={granter._id}
             img={granter.img}
             name={granter.name}
-            desc={granter.Description}
-            rate={granter.Rate}
+            desc={granter.description}
+            rate={granter.grantAmount}
           />
         ))}
       </div>

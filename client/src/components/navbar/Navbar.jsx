@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 function Navbar() {
   const { logout, user } = useAuth0();
   const [showPopup, setShowPopup] = useState(false);
-
+  const userRole = user['http://localhost:5173//roles'];
   const togglePopup = () => {
     setShowPopup(!showPopup);
   };
@@ -36,6 +36,7 @@ function Navbar() {
             <div className="arrow-up absolute right-2 top-[-2px] h-6 w-6 rotate-45 bg-neutral-50"></div>
             <div className="grid grid-rows-2">
               <p className="">{user.email}</p>
+              <p className="text-orange-500">{userRole}</p>
               <hr />
               <button
                 className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-400"
