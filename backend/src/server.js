@@ -12,6 +12,10 @@ const PORT = process.env.PORT || 6969;
 const app = express()
 
 // middlewares
+app.use((req, res, next) => {
+    res.setHeader('Content-Security-Policy', "script-src 'self' http://localhost:5173");
+    next();
+  });
 app.use(bodyParser.json())
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
