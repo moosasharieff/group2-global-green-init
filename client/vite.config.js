@@ -11,4 +11,10 @@ export default defineConfig({
     // Expose environment variables to the client-side code
     'process.env': process.env,
   },
+  // server: {
+  //   port: 5173,
+  //   strictPort: true,
+  //   host: true,
+  //   origin: 'https://0.0.0.0:5173'
+  // }
 });
