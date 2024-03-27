@@ -50,11 +50,11 @@ function GrantForm({ closeModal, cardData }) {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-opacity-0 bg-white flex justify-center items-center z-50"> {/* Increased z-index */}
+    <div className="fixed top-0 left-56 w-[77%] h-full bg-opacity-0 bg-white flex justify-center items-center z-50">
       <div className="bg-white rounded-lg shadow-md p-8 w-144 flex"> 
         <div className="flex flex-col justify-between w-1/2 mr-4"> 
           <div>
-            <h2 className="font-extrabold text-xl mb-4">{cardData.name}</h2> 
+            <h2 className="font-extrabold text-xl text-green-500 mb-4">{cardData.name}</h2> 
             <p className="text-gray-700 mb-4"> 
               {cardData.desc}
             </p>

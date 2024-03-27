@@ -3,33 +3,64 @@ import Card from "../../components/Card/Card";
 import plantImge2 from "../../assets/plant2.png";
 import { IoFolderOpenOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
+import RequestModel from "../../components/RequestModal/RequestModel";
 
 function LandingPage() {
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [granterData, setGratnerData] = useState([]);
+
+  const handleRequestClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       const API_BASE_URL = `${process.env.REACT_APP_API_BASE_URL}api/getGrants`;
-      console.log(API_BASE_URL)
+      console.log(API_BASE_URL);
       try {
         const response = await axios.get(API_BASE_URL);
         setGratnerData(response.data);
-        console.log(response.data)
+        console.log(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, []);
 
   return (
-    <div className="grid h-screen w-full grid-cols-1 gap-2 bg-neutral-50">
+    <div className="grid h-screen  w-full grid-cols-1 gap-2 bg-neutral-50">
       <div className="h-16 bg-neutral-50">
         <Navbar />
       </div>
-      <div className="grid h-auto grid-cols-2 place-items-center gap-8 rounded-xl shadow-md md:ml-36 md:mt-10 md:w-[80%]">
+      <div className="flex justify-center w-full items-center h-14">
+        <div className="flex w-[75%] h-16">
+          <div className=" flex rounded-lg w-full">
+            <ul className="flex items-center justify-between w-full">
+              <div className="w-[60%]">
+                <li>
+                  <input className="border rounded-2xl p-2 px-4 w-[40%] focus:border-green-700 outline:none" placeholder="search for grants..." type="text" name="" id="" />
+                </li>
+              </div>
+              <div className="">
+                <li
+                  onClick={handleRequestClick}
+                  className="px-4 py-2 rounded-2xl cursor-pointer hover:text-white hover:bg-green-600 text-green-500 "
+                >
+                  Requests
+                </li>
+              </div>
+            </ul>
+          </div>
+          <RequestModel isOpen={isModalOpen} onClose={handleCloseModal} />
+        </div>
+      </div>
+      <div className="grid h-auto grid-cols-2 place-items-center gap-8 rounded-xl shadow-md md:ml-40 md:mt-10 md:w-[75%]">
         <div className="rounded-xl">
           <img className="rounded-xl" src={plantImge2} alt="popular-card" />
         </div>
@@ -69,7 +100,7 @@ function LandingPage() {
             img={granter.img}
             name={granter.name}
             desc={granter.description}
-            rate={granter.grantAmount}
+            rate={granter.grant_amount}
           />
         ))}
       </div>

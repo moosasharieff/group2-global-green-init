@@ -1,41 +1,51 @@
-import { useState, useEffect } from 'react';
-import Navbar from '../../components/navbar/Navbar';
-import AdminCard from '../../components/Card/AdminCard';
-import axios from 'axios'
+import { useState, useEffect } from "react";
+import Navbar from "../../components/navbar/Navbar";
+import AdminCard from "../../components/Card/AdminCard";
+import axios from "axios";
+import SideBar from "../../components/SideBar/SideBar";
+import AdminUsersPage from "../../components/AdminComponents/AdminUsersPage";
+import AdminClientRequestsPage from "../../components/AdminComponents/AdminClientRequestsPage";
+import AdminAddGrants from "../../components/AdminComponents/AdminAddGrants";
+import { FiUsers } from "react-icons/fi";
+import { PiUserSwitchFill } from "react-icons/pi";
+import { CgAdd } from "react-icons/cg";
+
+const SidebarMenu = [
+  { icon: <FiUsers/>, value: "Users" },
+  { icon: <PiUserSwitchFill />, value: "Client Requests" },
+  { icon: <CgAdd />, value: "Add Grants" },
+];
+
+const RenderComponent = ({ index }) => {
+  switch (index) {
+    case 0:
+      return <AdminUsersPage />;
+    case 1:
+      return <AdminClientRequestsPage />;
+    case 2:
+      return <AdminAddGrants />;
+    default:
+      break;
+  }
+};
 
 const AdminPage = () => {
-  const [clientRequest, setClientRequest] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const api_url = `${process.env.REACT_APP_API_BASE_URL}api/admin-client-requests`;
-
-      console.log(api_url)
-      try {
-        const response = await axios.get(api_url);
-        setClientRequest(response.data);
-        console.log(response)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
+  const [isSelected, SetIsSelected] = useState(1);
   return (
-    <div>
+    <div className="w-full h-screen bg-slate-300-400 flex flex-auto scroll-m-0">
       <Navbar />
-      <div className="justify-center items-center bg-slate-700 top-50">
-        {clientRequest.map((requests) => (
-          <AdminCard
-            key={requests._id}
-            email={requests.email}
-            username={requests.username}
-            description={requests.description}
-            requestedAmount={requests.requestedAmount}
-          />
-        ))}
+      <div className="flex flex-auto">
+        <SideBar
+          MenuItems={SidebarMenu}
+          isSelected={isSelected}
+          SetIsSelected={SetIsSelected}
+        />
+        <div className="justify-center items-center mt-[6%] overflow-auto w-full">
+          <RenderComponent index={isSelected} />
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default AdminPage;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 /**
  * Schema definition for client requests.
@@ -10,22 +10,30 @@ const mongoose = require('mongoose');
  */
 
 const clientRequestSchema = new mongoose.Schema({
-    username: {
-        type:String,
-        required: true    
-    },
-    email: {
-        type:String,
-        required: true        
-    },
-    description: {
-        type:String,
-        required: true        
-    },
-    requestedAmount: {
-        type:Number,
-        required: true       
-    },
-})
+  granterName: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  requestedAmount: {
+    type: Number,
+    required: true,
+  },
+  grantStatus: {
+    type: Boolean,
+    default: false
+  }
+});
 
-module.exports = mongoose.model('ClientRequest', clientRequestSchema);
+module.exports = mongoose.model("ClientRequest", clientRequestSchema);
