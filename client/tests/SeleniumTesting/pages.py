@@ -3,7 +3,7 @@ import time
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from elements import Email_Field_Elements, Password_Field_Elements, Forgot_Password_Field_Elements, Fund_Project_Description_Field_Elements, Fund_Amount_Field_Elements
-from locators import HomePageLocators, ContentPageLocators, SignUpPageLocators, SignInPageLocators, FundCardLocators
+from locators import HomePageLocators, ContentPageLocators, SignUpPageLocators, SignInPageLocators, FundCardLocators, AdminLocators
 
 class SignUp_Email_Element(Email_Field_Elements):
     """ This class get the search text from the specified locator """
@@ -184,3 +184,13 @@ class FundCardPage(ContentPage):
         element = self.wait.until(EC.element_to_be_clickable(FundCardLocators.SUBMIT))
         element.click()
 
+class AdminPage(ContentPage):
+
+    def approve_button(self):
+        """ Returns element Approve button element """
+        return self.wait.until(EC.element_to_be_clickable(AdminLocators.APPROVE_BUTTON))
+
+
+    def decline_button(self):
+        """ Returns element Decline button element """
+        return self.wait.until(EC.element_to_be_clickable(AdminLocators.DECLINE_BUTTON))
