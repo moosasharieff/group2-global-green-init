@@ -35,7 +35,7 @@ function AdminClientRequestsPage() {
   }
 
   return (
-    <div className="justify-center items-center top-50 overflow-auto w-full">
+    <div className="justify-center items-center top-30 overflow-auto w-full">
       {clientRequest.slice().reverse().map((requests, index) => (
         <AdminCard
           key={index}

@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
-import AdminCard from "../../components/Card/AdminCard";
-import axios from "axios";
 import SideBar from "../../components/SideBar/SideBar";
 import AdminUsersPage from "../../components/AdminComponents/AdminUsersPage";
 import AdminClientRequestsPage from "../../components/AdminComponents/AdminClientRequestsPage";

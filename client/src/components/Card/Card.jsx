@@ -5,7 +5,6 @@ import { useState } from "react";
 function Card({ grantImage, name, desc, rate }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const truncatedDescription = Turncate(desc, 30);
-  console.log(`image -----> ${grantImage}`);
   function Turncate(description, descLength) {
     if (description.length <= descLength) {
       return description;
