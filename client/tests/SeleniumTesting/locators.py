@@ -38,7 +38,7 @@ class SignInPageLocators:
     EMAIL_TXT = (By.XPATH, "//div[@data-dynamic-label-for='username']")
     PASSWORD_CLK = (By.ID, "password")
     PASSWORD_TXT = (By.XPATH, "//div[@data-dynamic-label-for='password']")
-    FORGOT_PASSWORD = (By.XPATH, "//a[@class='ce78228eb c80853310 cfe4c492b']")
+    FORGOT_PASSWORD = (By.XPATH, "//a[contains(text(),'Forgot password?')]")
     EMAIL_FORGOT_PASSWORD = (By.ID, "email") # Email box on forgot password page
     FORGOT_PASSWORD_PAGE = (By.XPATH, "//h1[@class='c75a821d8 cf4ccfc47']") # Forgot Password Text on forgot password page
     USER_EMAIL = "moosasharieff@myyahoo.com"
