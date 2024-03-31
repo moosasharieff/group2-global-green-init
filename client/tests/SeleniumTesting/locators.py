@@ -2,7 +2,7 @@
 from selenium.webdriver.common.by import By
 
 class VARIABLES(object):
-    URL = "https://v2.globalgreeninit.world/"
+    URL = "https://globalgreeninit.world/"
 
 class HomePageLocators(object):
     SIGNIN = (By.XPATH, "//button[@type='submit']")  # Entering from homepage to signIn page
@@ -23,8 +23,8 @@ class SignUpPageLocators:
 
 class ContentPageLocators(object):
     CIRCLE_LINK = (By.XPATH, "//div[@class='h-12 w-12 cursor-pointer rounded-full bg-black']")
-    LOGGED_EMAIL = (By.XPATH, "//div[@class='grid grid-rows-2']//p")
-    LOGOUT_BUTTON = (By.XPATH, "//div[@class='grid grid-rows-2']//button")
+    LOGGED_EMAIL = (By.XPATH, "//div[@class='grid grid-rows-3 gap-y-2']//p")
+    LOGOUT_BUTTON = (By.XPATH, "//div[@class='grid grid-rows-3 gap-y-2']//button")
     LOGO_IMG = (By.XPATH, "//li[@class='h-12 w-12']")
     ORGANIZATION = (By.XPATH, "//div[@class='grid h-auto grid-cols-2 place-items-center gap-8 rounded-xl shadow-md md:ml-36 md:mt-10 md:w-[80%]']")
     CARDS = (By.XPATH, "//img[@class='rounded-xl object-fill']")
@@ -41,8 +41,8 @@ class SignInPageLocators:
     FORGOT_PASSWORD = (By.XPATH, "//a[@class='ce78228eb c80853310 cfe4c492b']")
     EMAIL_FORGOT_PASSWORD = (By.ID, "email") # Email box on forgot password page
     FORGOT_PASSWORD_PAGE = (By.XPATH, "//h1[@class='c75a821d8 cf4ccfc47']") # Forgot Password Text on forgot password page
-    USER_EMAIL = "moosasharieff@gmail.com"
-    USER_PASSWORD = "testing@123"
+    USER_EMAIL = "moosasharieff@myyahoo.com"
+    USER_PASSWORD = "Testing@123"
     INCORRECT_EMAIL_OR_PASSWORD = (By.XPATH, "//span[@id='error-element-password']")
     CARDS = (By.XPATH, "//img[@class='rounded-xl object-fill']")
     BACK_TO_LOGIN = (By.XPATH, "//button[@value='back-to-login']")
