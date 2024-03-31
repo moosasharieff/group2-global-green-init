@@ -29,7 +29,7 @@ class Nausicca_SignUp_Page(unittest.TestCase):
     def setUp(self) -> None:
         # Navigate to SignUp page
         self.driver = webdriver.Firefox()
-        self.driver.get("https://v2.globalgreeninit.world")
+        self.driver.get(VARIABLES.URL)
 
         # Navigate to SignUp page
         self.signUp_page = page.SignUpPage(self.driver)
@@ -53,7 +53,7 @@ class Nausicca_SignUp_Page(unittest.TestCase):
     def test_verify_if_password_field_present_correctly(self):
         """" Test 2. The Password field is preset """
         welcomeTxt = self.signUp_page.welcome_element().text
-        passwordTxt = self.signUp_page.pwd_element.text
+        passwordTxt = self.signUp_page.password_element.text
 
         self.assertEqual(welcomeTxt, "Welcome")
         self.assertEqual(passwordTxt, "Password")
@@ -61,13 +61,12 @@ class Nausicca_SignUp_Page(unittest.TestCase):
     def test_Verify_that_email_field_is_mandatory(self):
         """ Test 3. The email field is mandatory and verify we are still on Sign Up after clicking on Sign Up button """
 
-        self.signUp_page.pwd_element = self.fake.password(10)
+        self.signUp_page.password_element = self.fake.password(10)
         self.signUp_page.click_submit_button()
 
         # Assertions
         self.assertEqual(self.signUp_page.welcome_element().text, "Welcome")
         self.assertEqual(self.signUp_page.email_element.text, "Email address")
-        self.assertEqual(self.signUp_page.pwd_element.text, "Password")
 
     def test_Verify_that_password_field_is_mandatory(self):
         """ Test 4. The Password field is mandatory and verify we are still on Sign Up after clicking on Sign Up button """
@@ -79,8 +78,8 @@ class Nausicca_SignUp_Page(unittest.TestCase):
         # Assertions
         # self.assertIn(self.signUp_page.get_passwordError().text, "At least 8 characters")
         self.assertEqual(email, email)
-        self.assertIsNotNone(self.signUp_page.pwd_element)
-        self.assertEqual("Password", self.signUp_page.pwd_element.text)
+        self.assertIsNotNone(self.signUp_page.password_element)
+        self.assertEqual("Password", self.signUp_page.password_element.text)
         # self.assertEqual(, "")
 
 
@@ -92,7 +91,7 @@ class Nausicca_SignUp_Page(unittest.TestCase):
 
         # Entering incompatible email credentials
         self.signUp_page.email_element = emailVar
-        self.signUp_page.pwd_element = self.fake.password(10)
+        self.signUp_page.password_element = self.fake.password(10)
         self.signUp_page.click_submit_button()
 
         emailError = self.signUp_page.get_emailError().text
@@ -108,16 +107,16 @@ class Nausicca_SignUp_Page(unittest.TestCase):
 
         # Entering incompatible email credentials
         self.signUp_page.email_element = self.fake.email()
-        self.signUp_page.pwd_element = WrgPwd
+        self.signUp_page.password_element = WrgPwd
         self.signUp_page.click_submit_button()
 
         # Assertions
-        self.assertIsNotNone(self.signUp_page.pwd_element)
+        self.assertIsNotNone(self.signUp_page.password_element)
 
     def test_verify_user_is_unable_to_sign_up_with_password_that_does_not_meet_the_password_complexity_requirements(self):
         """ Test 7. Testing with different password requirement and confirm if password is complexity works """
 
-        self.signUp_page.pwd_element = "Testing@1"
+        self.signUp_page.password_element = "Testing@1"
         self.signUp_page.click_submit_button()
 
         # Assertions
@@ -128,7 +127,7 @@ class Nausicca_SignUp_Page(unittest.TestCase):
 
         email = self.fake.email()
         self.signUp_page.email_element = email
-        self.signUp_page.pwd_element = self.fake.password()
+        self.signUp_page.password_element = self.fake.password()
         self.signUp_page.click_submit_button()
 
         # Assertions
@@ -139,7 +138,7 @@ class Nausicca_SignUp_Page(unittest.TestCase):
         """ Test 9. Test if user is able to redirect to correct page after sign up """
         email = self.fake.email()
         self.signUp_page.email_element = email
-        self.signUp_page.pwd_element = self.fake.password()
+        self.signUp_page.password_element = self.fake.password()
         self.signUp_page.click_submit_button()
 
         # Assertions
@@ -154,14 +153,14 @@ class Nausicca_SignUp_Page(unittest.TestCase):
 
         # Sign Up
         self.signUp_page.email_element = email
-        self.signUp_page.pwd_element = password
+        self.signUp_page.password_element = password
         self.signUp_page.click_submit_button()
         # Logout
         self.content_page.get_logout_button().click()
         # Signing up again with same credentials
         self.signUp_page.navigate_to_sign_up_page()
         self.signUp_page.email_element = email
-        self.signUp_page.pwd_element = password
+        self.signUp_page.password_element = password
         self.signUp_page.click_submit_button()
 
         # Assertions
@@ -177,7 +176,7 @@ class Nausicca_SignUp_Page(unittest.TestCase):
 
         # Assertions
         self.assertEqual(self.signUp_page.welcome_element().text, "Welcome")
-        self.assertEqual(self.signUp_page.get_signIn_button().text, "Sign up") # Sign Up button only visible at Sign in section
+        self.assertEqual(self.signUp_page.get_signUp_button().text, "Sign up") # Sign Up button only visible at Sign in section
 
 
     def tearDown(self) -> None:

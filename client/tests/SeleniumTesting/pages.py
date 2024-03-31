@@ -98,9 +98,13 @@ class SignUpPage(HomePage):
 
     def get_signIn_button(self):
         """ Fetchs Sign In button element """
-        element = self.driver.find_element(*SignUpPageLocators.SIGNUP)
+        element = self.driver.find_element(*SignUpPageLocators.LOGIN)
         return element
 
+    def get_signUp_button(self):
+        """ Fetchs Sign In button element """
+        element = self.driver.find_element(*SignUpPageLocators.SIGNUP)
+        return element
 
 class ContentPage(HomePage):
     """ This is the page we see after signing Up """

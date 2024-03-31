@@ -16,9 +16,10 @@ class SignUpPageLocators:
     PASSWORD_TXT = (By.XPATH, "//div[@data-dynamic-label-for='password']")
     PASSWORD_ERR = (By.XPATH, "//li[@data-error-code='password-policy-length-at-least']")
     PASSWORD_COMPLEXITY = (By.XPATH, "//div[@class='cf325142a']")
-    SIGNUP = (By.XPATH, "//a[@class='ce78228eb cfe4c492b']")  # Entering from signIn page to singUp page (LOGIN)
+    SIGNUP = (By.XPATH, "//a[contains(text(),'Sign up')]")  # Entering from signIn page to singUp page (LOGIN)
     SIGNUP_ERR = (By.XPATH, "//div[@id='prompt-alert']")
-    SUBMIT = (By.NAME, "action") # Entering from
+    SUBMIT = (By.NAME, "action")
+    LOGIN = (By.XPATH, "//a[contains(text(),'Log in')]")
 
 
 class ContentPageLocators(object):
