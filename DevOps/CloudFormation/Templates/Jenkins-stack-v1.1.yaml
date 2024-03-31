@@ -79,4 +79,4 @@ Outputs:
     Description: 'Security Group ID for Jenkins'
     Value: !Ref JenkinsSecurityGroup
     Export:
-      Name: JenkinsSecurityGroupID
+      Name: Jenkins-PublicSubnet1ID
