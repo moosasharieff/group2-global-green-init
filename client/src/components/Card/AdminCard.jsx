@@ -35,7 +35,6 @@ function AdminCard({
         <div className="grid grid-rows-1 h-auto w-full cursor-pointer items-center rounded-2xl bg-neutral-100 p-6 shadow-2xl transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-slate-200 md:w-[70%]">
         <div className="grid grid-cols-2 gap-2 justify-center items-center">
               <div className="w-full cursor-pointer items-center justify-center rounded-xl p-2 bg-green-400 hover:bg-green-500">
-                {/* <h1 className="text-white font-bold"></h1> */}
                 <h1 className="">€{requestedAmount} for {granterName}</h1>
               </div>
             </div>

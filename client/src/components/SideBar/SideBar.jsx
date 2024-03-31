@@ -1,9 +1,5 @@
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useAuth0 } from "@auth0/auth0-react";
-import { FiUsers } from "react-icons/fi";
-import { PiUserSwitchFill } from "react-icons/pi";
-import { CgAdd } from "react-icons/cg";
 
 function SideBar({ MenuItems, isSelected, SetIsSelected }) {
   const { user } = useAuth0();
