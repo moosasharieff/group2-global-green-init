@@ -1,0 +1,103 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy an Ubuntu EC2 instance with Docker and Jenkins in the Jenkins VPC.
+
+Parameters:
+  JenkinsVPCID:
+    Type: String
+    Description: The VPC ID for the Jenkins environment.
+
+  JenkinsSubnetID:
+    Type: String
+    Description: The Subnet ID for the Jenkins environment where the EC2 instance will be deployed.
+
+Resources:
+  JenkinsSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for Jenkins EC2 instance allowing SSH, HTTP, and HTTPS
+      VpcId: !Ref JenkinsVPCID
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+
+  InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: EC2DockerAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:Describe*
+                  - cloudwatch:*
+                Resource: "*"
+
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+        - Ref: InstanceRole
+
+  JenkinsInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t3.large
+      ImageId: !FindInMap [UbuntuAMI, !Ref "AWS::Region", AMI]
+      IamInstanceProfile: !Ref InstanceProfile
+      SecurityGroupIds:
+        - !Ref JenkinsSecurityGroup
+      SubnetId: !Ref JenkinsSubnetID
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt-get update
+          apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+          add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+          apt-get update
+          apt-get install -y docker-ce docker-ce-cli containerd.io
+          usermod -aG docker ubuntu
+          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+          # Run Jenkins in Docker
+          docker run -d -p 8080:8080 -p 50000:50000 --name jenkins jenkins/jenkins:lts
+
+Mappings:
+  UbuntuAMI:
+    us-east-1:
+      AMI: ami-1234567890abcdef0
+    eu-west-1:
+      AMI: ami-abcdef1234567890
+    us-east-2:
+      AMI: ami-0b8b44ec9a8f90422
+    # Ensure you have the correct and latest AMIs for your region
+
+Outputs:
+  JenkinsInstanceId:
+    Description: The Instance ID of the Jenkins EC2 instance.
+    Value: !Ref JenkinsInstance
+
+  JenkinsInstancePublicIP:
+    Description: The Public IP address of the Jenkins EC2 instance.
+    Value: !GetAtt JenkinsInstance.PublicIp
