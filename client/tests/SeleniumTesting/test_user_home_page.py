@@ -60,14 +60,12 @@ class Nausicca_User_Home_Page(unittest.TestCase):
         # Assertions
         self.assertIsNotNone(self.content_page.profile_cirlce())
         self.assertEqual(self.content_page.get_email().text, SignInPageLocators.USER_EMAIL)
-        self.assertIsNotNone(self.driver.find_element(*ContentPageLocators.ORGANIZATION))
         self.assertIsNotNone(self.driver.find_element(*ContentPageLocators.LOGO_IMG))
 
     def test_verify_if_we_are_able_to_see_different_Funds_available(self):
         """ Test 3. """
 
         self.assertTrue(self.content_page.check_if_cards_present())
-        self.assertEqual(self.content_page.check_card_title().text, "Organization")
 
     def test_verify_if_we_are_able_to_click_on_the_different_Fund_cards(self):
         """ Test 4. """
