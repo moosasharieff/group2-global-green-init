@@ -34,6 +34,41 @@ Resources:
         - Key: Name
           Value: Jenkins-Subnet
 
+  JenkinsInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: Jenkins-IGW
+
+  AttachInternetGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref JenkinsVPC
+      InternetGatewayId: !Ref JenkinsInternetGateway
+  
+  JenkinsRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref JenkinsVPC
+      Tags:
+        - Key: Name
+          Value: Jenkins-RouteTable
+
+  JenkinsRoute:
+    Type: AWS::EC2::Route
+    DependsOn: AttachInternetGateway
+    Properties:
+      RouteTableId: !Ref JenkinsRouteTable
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !Ref JenkinsInternetGateway
+
+  SubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref JenkinsSubnet
+      RouteTableId: !Ref JenkinsRouteTable
+
   JenkinsSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
