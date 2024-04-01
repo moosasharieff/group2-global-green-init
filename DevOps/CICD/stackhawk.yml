@@ -1,0 +1,6 @@
+app:
+  applicationId: ${STACKHAWK_APP_ID} 
+  env: ${STACKHAWK_ENV} 
+  host: ${STACKHAWK_HOST} 
+hawk:
+  apiKey: ${STACKHAWK_API_KEY} 
