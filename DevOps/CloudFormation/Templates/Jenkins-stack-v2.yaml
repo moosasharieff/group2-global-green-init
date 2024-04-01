@@ -1,0 +1,99 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Setup Jenkins with its own VPC, Security Group, Subnet, and VPC Peering with manual VPC ID input.'
+
+Parameters:
+  ProductionVPCID:
+    Type: String
+    Description: 'The VPC ID for the Production environment to peer with Jenkins VPC.'
+  TestingVPCID:
+    Type: String
+    Description: 'The VPC ID for the Testing environment to peer with Jenkins VPC.'
+  StagingVPCID:
+    Type: String
+    Description: 'The VPC ID for the Staging environment to peer with Jenkins VPC.'
+
+Resources:
+  JenkinsVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: '10.3.0.0/16'
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: Jenkins-VPC
+
+  JenkinsSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref JenkinsVPC
+      CidrBlock: '10.3.1.0/24'
+      AvailabilityZone: !Select [0, !GetAZs '']
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: Jenkins-Subnet
+
+  JenkinsSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'Security Group for Jenkins Server'
+      VpcId: !Ref JenkinsVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: '0.0.0.0/0' # SSH access
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          CidrIp: '0.0.0.0/0' # Jenkins web interface
+      Tags:
+        - Key: Name
+          Value: Jenkins-SecurityGroup
+
+  ProductionVPCPeeringConnection:
+    Type: AWS::EC2::VPCPeeringConnection
+    Properties:
+      VpcId: !Ref JenkinsVPC
+      PeerVpcId: !Ref ProductionVPCID
+      Tags:
+        - Key: Name
+          Value: Jenkins-to-Production-Peering
+
+  TestingVPCPeeringConnection:
+    Type: AWS::EC2::VPCPeeringConnection
+    Properties:
+      VpcId: !Ref JenkinsVPC
+      PeerVpcId: !Ref TestingVPCID
+      Tags:
+        - Key: Name
+          Value: Jenkins-to-Testing-Peering
+
+  StagingVPCPeeringConnection:
+    Type: AWS::EC2::VPCPeeringConnection
+    Properties:
+      VpcId: !Ref JenkinsVPC
+      PeerVpcId: !Ref StagingVPCID
+      Tags:
+        - Key: Name
+          Value: Jenkins-to-Staging-Peering
+
+Outputs:
+  JenkinsVPCID:
+    Description: 'VPC ID for Jenkins'
+    Value: !Ref JenkinsVPC
+    Export:
+      Name: Jenkins-VPCID
+
+  JenkinsSubnetID:
+    Description: 'Subnet ID for Jenkins resources'
+    Value: !Ref JenkinsSubnet
+    Export:
+      Name: Jenkins-SubnetID
+
+  JenkinsSecurityGroupID:
+    Description: 'Security Group ID for Jenkins'
+    Value: !Ref JenkinsSecurityGroup
+    Export:
+      Name: JenkinsSecurityGroupID
