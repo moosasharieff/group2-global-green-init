@@ -1,35 +1,16 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Deploy an Ubuntu EC2 instance with Docker and Jenkins in the Jenkins VPC.
 
-Parameters:
-  JenkinsVPCID:
-    Type: String
-    Description: The VPC ID for the Jenkins environment.
+#Parameters:
+ # JenkinsVPCID:
+ #   Type: String
+ #   Description: The VPC ID for the Jenkins environment.
 
-  JenkinsSubnetID:
-    Type: String
-    Description: The Subnet ID for the Jenkins environment where the EC2 instance will be deployed.
+  #JenkinsSubnetID:
+    #Type: String
+    #Description: The Subnet ID for the Jenkins environment where the EC2 instance will be deployed.
 
 Resources:
-  JenkinsSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Security group for Jenkins EC2 instance allowing SSH, HTTP, and HTTPS
-      VpcId: !Ref JenkinsVPCID
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 8080
-          ToPort: 8080
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
-          CidrIp: 0.0.0.0/0
-
   InstanceRole:
     Type: AWS::IAM::Role
     Properties:
@@ -62,12 +43,14 @@ Resources:
   JenkinsInstance:
     Type: AWS::EC2::Instance
     Properties:
-      InstanceType: t3.large
+      InstanceType: t2.micro
       ImageId: !FindInMap [UbuntuAMI, !Ref "AWS::Region", AMI]
       IamInstanceProfile: !Ref InstanceProfile
       SecurityGroupIds:
-        - !Ref JenkinsSecurityGroup
-      SubnetId: !Ref JenkinsSubnetID
+        - Fn::ImportValue: JenkinsSecurityGroupID
+      #SubnetId: 
+       # - Fn::ImportValue: Jenkins-SubnetID
+      SubnetId: !ImportValue Jenkins-SubnetID  
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
@@ -80,8 +63,7 @@ Resources:
           usermod -aG docker ubuntu
           curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           chmod +x /usr/local/bin/docker-compose
-          # Run Jenkins in Docker
-          docker run -d -p 8080:8080 -p 50000:50000 --name jenkins jenkins/jenkins:lts
+
 
 Mappings:
   UbuntuAMI:
