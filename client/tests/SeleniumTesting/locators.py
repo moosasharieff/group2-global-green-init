@@ -61,3 +61,14 @@ class FundCardLocators(object):
     RIGHT_FOOTER = (By.XPATH, "//div[@class='links']")
     RIGHTS_RESERVED = (By.XPATH, "//div[@class='copyright']")
     CONTACT = (By.XPATH, "//div[@class='contact']")
+
+class AdminLocators(object):
+
+    default_str = "//*[@id='root']/div/div/div[2]/div[1]/div[2]/div/div"
+    ADMIN_EMAIL = "l00179269@atu.ie"
+    ADMIN_PWD = "Admin@123"
+    FUND_EMAIL = (By.XPATH, f"{default_str}/h1[2]")
+    FUND_DESCRIPTION = (By.XPATH, f"{default_str}/p")
+    FUND_AMOUNT = (By.XPATH, f"{default_str}/div[1]")
+    APPROVE_BUTTON = (By.XPATH, f"{default_str}/div[2]/button[1]")
+    DECLINE_BUTTON = (By.XPATH, f"{default_str}/div[2]/button[2]")
