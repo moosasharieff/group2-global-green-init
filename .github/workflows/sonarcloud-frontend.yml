@@ -12,6 +12,7 @@ on:
   push:
     branches:
       - development
+      - main
 jobs:
   SonarCloudScan:
     runs-on: ubuntu-latest
