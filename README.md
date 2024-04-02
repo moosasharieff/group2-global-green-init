@@ -1,6 +1,6 @@
 # Project Template
 
-**MScDevOps Assign :** group2-global-green-init 
+**MScDevOps Assign:** group2-global-green-init 
 
 Project Website link: https://v1.globalgreeninit.world/
 
@@ -26,18 +26,23 @@ Project Website link: https://v1.globalgreeninit.world/
     Preamble
     This is the online repository for the DevOps Assignment.
 
-Each team should fill in the blanks <<>> and add additional content that the team agrees on. This is your contract of work. It is an agreement amongst yourselves. Honour it.
+Each team should fill in the blanks <<>> and add additional content that the team agrees on. This is your contract of work. It is an agreement amongst yourselves. Honor it.
 
 
 <Nausicaä’s Global Green Initiative>
-Our product will be delivered using an Agile methodology that embraces the DevOps culture. Please note that our culture embraces change and these documents are treated as living, breathing artefacts that will be continuously updated.
+Our product will be delivered using an Agile methodology that embraces the DevOps culture. Please note that our culture embraces change and these documents are treated as living, breathing artifacts that will be continuously updated.
 
 # Scrum Master
 
+<<list week number, student name>>
 Week 1&2, Honnesh Muppala
 Week 3&4, Chandan Gowda
 Week 5&6, Mohammed Moosa
-Week 7&8, Shyam Bist (Current sprint)
+Week 7&8, Shyam Bist
+Week 9&10, Chandan Gowda
+Week 11&12, Arun Babu
+week 13&14, vinayak 
+
 Rotating scrum master so that everyone gets to experience the role once.
 
 # Product Owner
@@ -46,6 +51,10 @@ week 1&2, Mohammed Moosa
 Week 3&4, Honnesh Muppala
 Week 5&6, Arun Babu
 Week 7&8, Vinayak Sharma
+Week 9&10, Priyanka Polasi
+Week 11&12, Chandan Gowda
+Week 13&14, Honnesh Muppala
+
 Rotating product owner so that everyone gets to experience the role once.
 
 # Team Members
@@ -67,14 +76,14 @@ to be run.
 Database
 Database persistence technology
 
-Define the buisness Requirements
-1.Online Grant Application System - Develop an online platform for grant applications supporting climate change initiatives
-2.Grant Types - Provide different grant options, including the popular Teto grant offering funds up to €10,000
-3.User Registration and Details Collection - Gather applicant details and funding requirements to map them to suitable grants. Include an additional field for special award applications.
-4.Administrator Access - Allow Nausicaä Enterprises to access and edit detailed information securely.
-5.Data Security - Ensure robust security measures to protect applicant data and prevent unauthorized changes once submitted.
-6.Clean and Simple Interface - Design an intuitive and user-friendly interface for ease of use by grant applicants.
-7.Prototype Development - Create simple prototype pages to test the system's functionalities and validate the pipeline developed for the project.
+Define the business requirements
+1. Online Grant Application System - Develop an online platform for grant applications supporting climate change initiatives
+2. Grant Types - Provide different grant options, including the popular Teto grant offering funds up to €10,000
+3. User Registration and Details Collection - Gather applicant details and funding requirements to map them to suitable grants. Include an additional field for special award applications.
+4. Administrator Access - Allow Nausicaä Enterprises to access and edit detailed information securely.
+5. Data Security - Ensure robust security measures to protect applicant data and prevent unauthorized changes once submitted.
+6. Clean and Simple Interface - Design an intuitive and user-friendly interface for ease of use by grant applicants.
+7. Prototype Development - Create simple prototype pages to test the system's functionalities and validate the pipeline developed for the project.
 
 Named queries and database triggers for security
 Regex for cleansing and validation of data before sending to the database.
@@ -85,6 +94,7 @@ Regex for cleansing and validation of data before sending to the database.
  - Project Website link: https://v1.globalgreeninit.world/
  - Jira: https://group2ausicaas.atlassian.net/jira/software/projects/GREEN/boards/1
  - Confluence: https://group2ausicaas.atlassian.net/wiki/spaces/TDWMZ/pages
+ - Stackhawk: https://app.stackhawk.com/applications
 
 # More Information
 For more information visit JIRA Dashboard and Confluence 
@@ -96,14 +106,14 @@ These are the current Risks on the project, re-aligned on a weekly basis
 
 # Tenants of Design
 Update the below to add what the group is using <<>>
-- Dedication to clean, secure, performant and self documented code
+- Dedication to clean, secure, performant, and self-documented code
   - code Frameworks used <<React.js 18.*>>
   - programming using the IDE <<VS code>>
   - code coverage tool used <<>>
   - Secure code:  <<>>
   - performance testing tool to be used -- **Jmeter** 
 - Documentation / code commenting **Updating in JIRA Confluence**
-- Datastore for persistance <<>>
+- Datastore for persistence <<>>
  
 # Security:
 - << >>: uses static analysis to find bugs in code. 
@@ -112,7 +122,7 @@ Update the below to add what the group is using <<>>
 # Testing:
 - Unit testing **Shyam and Moosa**
 - integretation testing **Arun,Chandan and Vinayak**
-- UA  **Honnesh and Priyanka**
+- QA  **Honnesh and Priyanka**
     
 # Environments:
 - staging and production  <<>>
@@ -191,4 +201,5 @@ The teams team's velocity is calculated by <<Team decides>>.
 The teams current story point velocity is "N/A". <<Update the velocity as the weeks progress>>
 
 # Definition of Ready/Done
+<<List criteria that are common here>>
 << 1. Code implementated 2. Documention, 3. Testing, 4. Met the buisness requirement>>
