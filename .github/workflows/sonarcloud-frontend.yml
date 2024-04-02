@@ -42,8 +42,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.organization=arunbabu6
-            -Dsonar.projectKey=arunbabu6_Green2v2-frontend
+            -Dsonar.organization=arunbabu
+            -Dsonar.projectKey=arunbabu_green2v2-frontend
             -Dsonar.sources=.
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
             -Dsonar.javascript.lcov.reportPaths=client/coverage/lcov.info
