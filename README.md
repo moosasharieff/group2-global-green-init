@@ -2,7 +2,7 @@
 
 **MScDevOps Assign:** group2-global-green-init 
 
-Project Website link: https://v1.globalgreeninit.world/
+Project Website link: https://globalgreeninit.world/
 
 # Table of Contents
     Preamble
@@ -73,6 +73,7 @@ Includes at least one self developed api and one webservice
 to be run.
 
 # Frameworks
+selenium 
 Database
 Database persistence technology
 
@@ -131,8 +132,8 @@ Update the below to add what the group is using <<>>
 - integrated and automated pipeline (commit -> test -> deploy) <<>>
 
 # Github version control:
-- branches used <<>>
-- version/release management <<>>
+- branches used <<Main, Development, DevOps>>
+- version/release management <<V1, V2 and V3>>
 
 # Agile project management methods/principles (jira)
 
