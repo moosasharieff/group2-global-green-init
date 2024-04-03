@@ -109,15 +109,15 @@ Update the below to add what the group is using <<>>
 - Dedication to clean, secure, performant, and self-documented code
   - code Frameworks used <<React.js 18.*>>
   - programming using the IDE <<VS code>>
-  - code coverage tool used <<>>
+  - code coverage tool used <<Sonar cloud>>
   - Secure code:  <<>>
   - performance testing tool to be used -- **Jmeter** 
 - Documentation / code commenting **Updating in JIRA Confluence**
 - Datastore for persistence <<>>
  
 # Security:
-- << >>: uses static analysis to find bugs in code. 
-- <<>>.
+- << SAST>>: - Snyk
+- <<DAST>>. - StackHawk
 
 # Testing:
 - Unit testing **Shyam and Moosa**
