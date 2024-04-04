@@ -1,0 +1,113 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy an Ubuntu EC2 instance with Docker in specified VPC.
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    AllowedValues:
+      - Testing
+      - Staging
+      - Production
+      - Jenkins
+    Description: The name of the environment to deploy the EC2 instance.
+
+Resources:
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH and outbound traffic
+      VpcId:
+        Fn::ImportValue:
+          !Sub "${EnvironmentName}-VPCID"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
+  InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: EC2BasicAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:Describe*
+                  - cloudwatch:*
+                Resource: "*"
+
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+        - Ref: InstanceRole
+
+  UbuntuInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: !FindInMap [UbuntuAMI, !Ref "AWS::Region", AMI]
+      IamInstanceProfile: !Ref InstanceProfile
+      SecurityGroupIds:
+        - !Ref InstanceSecurityGroup
+      SubnetId:
+        Fn::ImportValue:
+          !Sub "${EnvironmentName}-PublicSubnet1ID"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt-get update
+          apt-get install -y \
+            apt-transport-https \
+            ca-certificates \
+            curl \
+            software-properties-common
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+          add-apt-repository \
+            "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+            $(lsb_release -cs) \
+            stable"
+          apt-get update
+          apt-get install -y docker-ce docker-ce-cli containerd.io
+          usermod -aG docker ubuntu
+          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+
+          # Setup cAdvisor for container monitoring
+          docker run \
+            --volume=/:/rootfs:ro \
+            --volume=/var/run:/var/run:rw \
+            --volume=/sys:/sys:ro \
+            --volume=/var/lib/docker/:/var/lib/docker:ro \
+            --publish=8080:8080 \
+            --detach=true \
+            --restart=always \
+            --name=cadvisor \
+            google/cadvisor:latest
+
+Mappings:
+  UbuntuAMI:
+    us-east-1:
+      AMI: ami-1234567890abcdef0
+    eu-west-1:
+      AMI: ami-abcdef1234567890
+    us-east-2:
+      AMI: ami-0b8b44ec9a8f90422
+    # Add more regions and AMI IDs as needed
+
+Outputs:
+  InstanceId:
+    Description: The Instance ID of the EC2 instance
+    Value: !Ref UbuntuInstance
