@@ -73,15 +73,10 @@ Outputs:
     Description: 'VPC ID for Jenkins'
     Value: !Ref JenkinsVPC
     Export:
-      Name: Jenkins-VPCID
+      Name: JenkinsVPCID
 
   JenkinsSecurityGroupID:
     Description: 'Security Group ID for Jenkins'
     Value: !Ref JenkinsSecurityGroup
     Export:
       Name: JenkinsSecurityGroupID
-  JenkinsSecurityGroupI:
-    Description: 'Security Group ID for Jenkins'
-    Value: !Ref JenkinsSecurityGroup
-    Export:
-      Name: Jenkins-PublicSubnet1ID

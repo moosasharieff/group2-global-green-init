@@ -11,6 +11,11 @@ Parameters:
       - Jenkins
     Description: The name of the environment to deploy the EC2 instance.
 
+  KeyPairName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: Must be the name of an existing EC2 KeyPair.
+
 Resources:
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -60,6 +65,7 @@ Resources:
       InstanceType: t2.micro
       ImageId: !FindInMap [UbuntuAMI, !Ref "AWS::Region", AMI]
       IamInstanceProfile: !Ref InstanceProfile
+      KeyName: !Ref KeyPairName
       SecurityGroupIds:
         - !Ref InstanceSecurityGroup
       SubnetId:
@@ -68,34 +74,53 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          # Update the apt package index and install packages to allow apt to use a repository over HTTPS
-          apt-get update
-          apt-get install -y \
-            apt-transport-https \
-            ca-certificates \
-            curl \
-            software-properties-common
+          echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' | sudo tee /etc/sudoers.d/ubuntu-nopasswd
+          apt-get update && apt-get upgrade -y
+          apt-get install -y apt-transport-https ca-certificates curl software-properties-common iputils-ping net-tools cron
 
-          # Add Docker’s official GPG key
+          # Install Docker
           curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-          # Set up the stable repository for Docker
-          add-apt-repository \
-           "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-           $(lsb_release -cs) \
-           stable"
-
-          # Update the apt package index, and install the latest version of Docker CE and containerd
+          add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
           apt-get update
-          apt-get install -y docker-ce docker-ce-cli containerd.io
+          apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
 
-          # Add the current user to the Docker group to run Docker commands without sudo
+          # Adding user to the Docker group
           usermod -aG docker ubuntu
 
-          # Install Docker Compose
-          # Check the latest release of Docker Compose on https://github.com/docker/compose/releases
-          COMPOSE_VERSION='1.29.2'
-          curl -L "https://github.com/docker/compose/releases/download/\${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          # Install Python3
+          apt-get install -y python3 python3-pip
+
+          # Install Node.js and npm via NVM
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install node # Install node and npm
+
+          # Install Trivy
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+
+          # Setup Node Exporter for Docker Host Monitoring
+          docker run -d \
+            --net="host" \
+            --pid="host" \
+            -v "/:/host:ro,rslave" \
+            --name node_exporter \
+            prom/node-exporter:latest \
+            --path.rootfs=/host
+
+          # Setup cAdvisor for Container Monitoring
+          docker run \
+            --volume=/:/rootfs:ro \
+            --volume=/var/run:/var/run:rw \
+            --volume=/sys:/sys:ro \
+            --volume=/var/lib/docker/:/var/lib/docker:ro \
+            --publish=8080:8080 \
+            --detach=true \
+            --name=cadvisor \
+            google/cadvisor:latest
+
+          # Docker Compose (optional, remove if not needed)
+          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           chmod +x /usr/local/bin/docker-compose
 
 Mappings:
@@ -104,8 +129,8 @@ Mappings:
       AMI: ami-1234567890abcdef0
     eu-west-1:
       AMI: ami-abcdef1234567890
-    eu-west-1:
-      AMI: ami-abcdef1234567890
+    us-east-2:
+      AMI: ami-0b8b44ec9a8f90422
     # Add more regions and AMI IDs as needed
 
 Outputs:
