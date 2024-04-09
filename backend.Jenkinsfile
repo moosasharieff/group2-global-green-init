@@ -12,18 +12,25 @@ pipeline {
 
     stages {
         stage('Setup') {
-            agent any
             steps {
                 script {
-                    env.ENVIRONMENT = BRANCH_NAME == 'main' ? 'Production' :
-                                  BRANCH_NAME == 'development' ? 'Testing' :
-                                  BRANCH_NAME == 'staging' ? 'Staging' :
-                                  BRANCH_NAME == 'devops' ? 'Demo' : 'Unknown'
+                    // Set environment based on branch name
+                    if (BRANCH_NAME == 'main') {
+                        env.ENVIRONMENT = 'Production'
+                    } else if (BRANCH_NAME == 'development') {
+                        env.ENVIRONMENT = 'Testing'
+                    } else if (BRANCH_NAME == 'devops') {
+                        env.ENVIRONMENT = 'Staging'
+                    } else {
+                        // For any branch not explicitly mentioned, you can choose to skip the build
+                        echo "Branch not configured for CI/CD. Skipping build."
+                        currentBuild.result = 'NOT_BUILT'
+                        return // Skip further stages
+                    }
                     echo "Environment set to ${env.ENVIRONMENT}"
                 }
             }
         }
-
         stage('Checkout Code') {
             agent any
             steps {
