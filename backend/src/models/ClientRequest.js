@@ -31,8 +31,8 @@ const clientRequestSchema = new mongoose.Schema({
     required: true,
   },
   grantStatus: {
-    type: Boolean,
-    default: false
+    type: String,
+    required: true,
   }
 });
 

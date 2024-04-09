@@ -11,7 +11,7 @@ import { CgAdd } from "react-icons/cg";
 const SidebarMenu = [
   { icon: <FiUsers/>, value: "Users" },
   { icon: <PiUserSwitchFill />, value: "Client Requests" },
-  { icon: <CgAdd />, value: "Add Grants" },
+  // { icon: <CgAdd />, value: "Add Grants" },
 ];
 
 const RenderComponent = ({ index }) => {
