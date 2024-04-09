@@ -28,25 +28,18 @@ function GrantForm({ closeModal, cardData }) {
       email: user.email,
       description,
       requestedAmount,
+      grantStatus : "Pending",
     };
 
     try {
       const api_url = `${process.env.REACT_APP_API_BASE_URL}api/user-requests`;
       console.log(api_url)
       const response = await axios.post(api_url, grantData);
-
-      console.log('Response from server:', response.data);
-
       closeModal();
       alert('Your grant application has been submitted!');
     } catch (error) {
       console.error('Error making Axios POST request:', error);
     }
-
-    console.log('Grant Application Data:', grantData);
-
-    closeModal();
-    alert('Your grant application has been submitted!');
   };
 
   return (

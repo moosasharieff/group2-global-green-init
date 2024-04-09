@@ -9,17 +9,21 @@ const OnBoardUser = require("../models/OnBoardUser");
  * @param {Object} res - The Express response object.
  */
 const createClientRequest = async (req, res) => {
-  const { granterName, username, email, description, requestedAmount } =
-    req.body;
-  console.log(`granter name -----> ${granterName}`);
+  const { granterName, username, email, description, requestedAmount } = req.body;
+  
   try {
+    const existingRequest = await ClientRequest.findOne({ granterName, email });
+    if (existingRequest) {
+      return res.status(400).json({ error: "Cannot request with the same granter and email again." });
+    }
+
     const newClientRequest = new ClientRequest({
       granterName,
       username,
       email,
       description,
       requestedAmount,
-      grantStatus: false,
+      grantStatus: "Pending",
     });
 
     const savedClientRequest = await newClientRequest.save();
@@ -100,25 +104,28 @@ const OnBoardNewUser = async (req, res) => {
 };
 
 const AdminDecision = async (req, res) => {
-  const { granterName, email, grantStatus } = req.body;
-  console.log(grantStatus, ' ', email, ' ', grantStatus);
+  const { id, granterName, email, grantStatus } = req.body;
+  console.log(id)
   try {
-    ClientRequest.findOneAndUpdate(
-      { granterName: granterName, email: email },
-      { $set: { grantStatus: grantStatus } },
-      { new: true }
-    )
-      .then((updatedRequest) => {
-        if (updatedRequest) {
-          console.log("Updated request:", updatedRequest);
-          res.status(201).json(updatedRequest);
-        } else {
-          console.log("Request not found.");
-          res.status(404).json({ error: "Request not found" });
+    // Find the user by ID
+    ClientRequest.findById(id)
+      .then((user) => {
+        if (!user) {
+          console.log("User not found.");
+          return res.status(404).json({ error: "User not found" });
         }
+        // If the user is found, update the grantStatus
+        user.granterName = granterName;
+        user.email = email;
+        user.grantStatus = grantStatus;
+        return user.save();
+      })
+      .then((updatedUser) => {
+        console.log("Updated user:", updatedUser);
+        res.status(201).json(updatedUser);
       })
       .catch((error) => {
-        console.error("Error updating request:", error.message);
+        console.error("Error updating user:", error.message);
         res.status(500).json({ error: "Internal Server Error" });
       });
   } catch (error) {
@@ -126,6 +133,7 @@ const AdminDecision = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 module.exports = {
   createClientRequest,
