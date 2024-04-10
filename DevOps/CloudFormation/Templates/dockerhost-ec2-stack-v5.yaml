@@ -119,7 +119,7 @@ Resources:
             --publish=8080:8080 \
             --detach=true \
             --name=cadvisor \
-            google/cadvisor:latest
+            gcr.io/cadvisor/cadvisor
 
           # Docker Compose (optional, remove if not needed)
           curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
