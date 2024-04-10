@@ -49,13 +49,17 @@ function RequestModel({ isOpen, onClose }) {
                   <span className="font-bold">{request.granterName}</span>
                   <span
                     className={
-                      request.grantStatus === true
+                      request.grantStatus === "accept"
                         ? "text-green-600"
+                        : request.grantStatus === "decline"
+                        ? "text-red-600"
                         : "text-yellow-600"
                     }
                   >
-                    {request.grantStatus === true
+                    {request.grantStatus === "accept"
                       ? " Approved"
+                      : request.grantStatus === "decline"
+                      ? " Declined"
                       : " Reviewing your application"}
                   </span>
                 </li>
