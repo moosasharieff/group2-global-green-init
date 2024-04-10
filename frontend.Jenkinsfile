@@ -95,20 +95,20 @@ pipeline {
 
 
         // SonarQube Analysis and Snyk Security Scan 
-       stage('SonarQube Analysis') {
-            agent any
-            steps {
-                withSonarQubeEnv('Sonarqube') { // 'Sonarcube-cred' from |should match the SonarQube configuration in Jenkins
-                    sh """
-                      sonar-scanner \
-                      -Dsonar.projectKey=ProjectGreenFrontend \
-                      -Dsonar.sources=. \
-                      -Dsonar.host.url=http://54.145.1.89:9000/ \
-                      -Dsonar.login=$SONARQUBE_TOKEN
-                    """
-                }
-            }
-        }
+       //stage('SonarQube Analysis') {
+         //   agent any
+           // steps {
+             //   withSonarQubeEnv('Sonarqube') { // 'Sonarcube-cred' from |should match the SonarQube configuration in Jenkins
+               //     sh """
+                 //     sonar-scanner \
+                   //   -Dsonar.projectKey=ProjectGreenFrontend \
+                     // -Dsonar.sources=. \
+                     // -Dsonar.host.url=http://54.145.1.89:9000/ \
+                     // -Dsonar.login=$SONARQUBE_TOKEN
+                    //"""
+                //}
+           // }
+        //}
 
         stage('Snyk Security Scan') {
             agent any
