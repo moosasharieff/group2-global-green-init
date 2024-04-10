@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGEE = 'arunthopil/pro-green-v2' // Corrected variable name
+        DOCKER_IMAGEE = 'arunthopil/pro-green-v4' // Corrected variable name
         SONARQUBE_TOKEN = credentials('sonar-aws')
         DOCKERHUB_CREDENTIALS = credentials('dockerhub1')
         MONGO_URI = credentials('MONGO_URI')
@@ -19,7 +19,7 @@ pipeline {
                         env.ENVIRONMENT = 'Production'
                     } else if (BRANCH_NAME == 'development') {
                         env.ENVIRONMENT = 'Testing'
-                    } else if (BRANCH_NAME == 'staging') {
+                    } else if (BRANCH_NAME == 'Staging') {
                         env.ENVIRONMENT = 'Staging'
                     } else {
                         // For any branch not explicitly mentioned, you can choose to skip the build
@@ -235,9 +235,9 @@ pipeline {
                                 sh """
                                     ssh -o StrictHostKeyChecking=no ab@host.docker.internal '
                                     docker pull ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER} &&
-                                    docker stop globalgreen-backend-v2 || true &&
-                                    docker rm globalgreen-backend-v2 || true &&
-                                    docker run -d --name globalgreen-backend-v2 -p 6969:6969 -e MONGO_URI="${MONGO_URI}" ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER}
+                                    docker stop globalgreen-backend-v4 || true &&
+                                    docker rm globalgreen-backend-v4 || true &&
+                                    docker run -d --name globalgreen-backend-v4 -p 6969:6969 -e MONGO_URI="${MONGO_URI}" ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER}
                                     '
                                 """
                             }
@@ -250,9 +250,9 @@ pipeline {
                                 sh """
                                     ssh -o StrictHostKeyChecking=no ubuntu@3.149.249.31 '
                                     docker pull ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER} &&
-                                    docker stop globalgreen-backend-v2 || true &&
-                                    docker rm globalgreen-backend-v2 || true &&
-                                    docker run -d --name globalgreen-backend-v2 -p 6969:6969 -e MONGO_URI="${MONGO_URI}" ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER}
+                                    docker stop globalgreen-backend-v4 || true &&
+                                    docker rm globalgreen-backend-v4 || true &&
+                                    docker run -d --name globalgreen-backend-v4 -p 6969:6969 -e MONGO_URI="${MONGO_URI}" ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER}
                                     '
                                 """
                             }
@@ -265,9 +265,9 @@ pipeline {
                                 sh """
                                     ssh -o StrictHostKeyChecking=no ubuntu@18.191.147.35 '
                                     docker pull ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER} &&
-                                    docker stop globalgreen-backend-v2 || true &&
-                                    docker rm globalgreen-backend-v2 || true &&
-                                    docker run -d --name globalgreen-backend-v2 -p 6969:6969 -e MONGO_URI="${MONGO_URI}" ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER}
+                                    docker stop globalgreen-backend-v4 || true &&
+                                    docker rm globalgreen-backend-v4 || true &&
+                                    docker run -d --name globalgreen-backend-v4 -p 6969:6969 -e MONGO_URI="${MONGO_URI}" ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER}
                                     '
                                 """
                             }
@@ -280,9 +280,9 @@ pipeline {
                                 sh """
                                     ssh -o StrictHostKeyChecking=no ubuntu@3.145.52.166'
                                     docker pull ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER} &&
-                                    docker stop globalgreen-backend-v2 || true &&
-                                    docker rm globalgreen-backend-v2 || true &&
-                                    docker run -d --name globalgreen-backend-v2 -p 6969:6969 -e MONGO_URI="${MONGO_URI}" ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER}
+                                    docker stop globalgreen-backend-v4 || true &&
+                                    docker rm globalgreen-backend-v4 || true &&
+                                    docker run -d --name globalgreen-backend-v4 -p 6969:6969 -e MONGO_URI="${MONGO_URI}" ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER}
                                     '
                                 """
                             }
