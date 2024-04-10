@@ -95,20 +95,20 @@ pipeline {
 
 
         // SonarQube Analysis and Snyk Security Scan 
-       stage('SonarQube Analysis') {
-            agent any
-            steps {
-                withSonarQubeEnv('Sonarqube') { // 'Sonarcube-cred' from |should match the SonarQube configuration in Jenkins
-                    sh """
-                      sonar-scanner \
-                      -Dsonar.projectKey=ProjectGreenFrontend \
-                      -Dsonar.sources=. \
-                      -Dsonar.host.url=http://54.145.1.89:9000/ \
-                      -Dsonar.login=$SONARQUBE_TOKEN
-                    """
-                }
-            }
-        }
+       //stage('SonarQube Analysis') {
+         //   agent any
+           // steps {
+             //   withSonarQubeEnv('Sonarqube') { // 'Sonarcube-cred' from |should match the SonarQube configuration in Jenkins
+               //     sh """
+                 //     sonar-scanner \
+                   //   -Dsonar.projectKey=ProjectGreenFrontend \
+                     // -Dsonar.sources=. \
+                     // -Dsonar.host.url=http://54.145.1.89:9000/ \
+                     // -Dsonar.login=$SONARQUBE_TOKEN
+                    //"""
+                //}
+           // }
+        //}
 
         stage('Snyk Security Scan') {
             agent any
@@ -152,19 +152,20 @@ pipeline {
             steps {
                 script {
                     // Create a directory 'artifacts' in the Jenkins workspace to hold the unstashed files
-                    sh "mkdir -p artifactsb"
-                    dir('artifactsb') {
+                    sh "mkdir -p artifacts"
+                    dir('artifacts') {
                         // Unstash the build artifacts into this 'artifacts' directory
-                        unstash 'build-artifactsb'
+                        unstash 'build-artifacts'
                         }
                         sshagent(['sshtoaws']) {
                             // Clear the 'artifacts' directory on the Docker host
-                            sh "ssh -v -i /var/jenkins_home/greenworld.pem ubuntu@10.3.1.91 'rm -rf ${PROJECT_DIR}/artifactsb/*'"
-                            sh "scp -v -rp artifactsb/* ubuntu@10.3.1.91:${PROJECT_DIR}/artifactsb/"
-                            sh "ssh -v -i /var/jenkins_home/greenworld.pem ubuntu@10.3.1.91 'ls -la ${PROJECT_DIR}/artifactsb/'"
+
+                            sh "ssh -v -i /var/jenkins_home/greenworld.pem ubuntu@10.3.1.91 'rm -rf ${PROJECT_DIR}/artifacts/*'"
+                            sh "scp -v -rp artifacts/* ubuntu@10.3.1.91:${PROJECT_DIR}/artifacts/"
+                            sh "ssh -v -i /var/jenkins_home/greenworld.pem ubuntu@10.3.1.91 'ls -la ${PROJECT_DIR}/artifacts/'"
 
                             // Build the Docker image on the Docker host
-                            sh "ssh -v -i /var/jenkins_home/greenworld.pem ubuntu@10.3.1.91 'cd ${PROJECT_DIR} && docker build -f frontend.Dockerfile -t ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-frontend-${env.BUILD_NUMBER} .'"
+                            sh "ssh -v -i /var/jenkins_home/greenworld.pem ubuntu@10.3.1.91 'cd ${PROJECT_DIR} && docker build -f Dockerfile -t ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-frontend-${env.BUILD_NUMBER} .'"
 
                         }
                         // Log in to DockerHub and push the image
@@ -178,6 +179,7 @@ pipeline {
                     }
             }
         }
+
 
         stage('Trivy Vulnerability Scan') {
             agent any
