@@ -103,7 +103,7 @@ function GrantForm({ closeModal, cardData }) {
                   id="requestedAmount"
                   name="requestedAmount"
                   value={inputValue}
-                  onChange={(e) => handleInputChange()}
+                  onChange={handleInputChange}
                   pattern="[0-9]*"
                   maxLength={String(cardData.rate).length}
                   className="w-full pl-8 pr-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-green-500 focus:ring-1"
