@@ -9,12 +9,17 @@ const OnBoardUser = require("../models/OnBoardUser");
  * @param {Object} res - The Express response object.
  */
 const createClientRequest = async (req, res) => {
-  const { granterName, username, email, description, requestedAmount } = req.body;
-  
+  const { granterName, username, email, description, requestedAmount } =
+    req.body;
+
   try {
     const existingRequest = await ClientRequest.findOne({ granterName, email });
     if (existingRequest) {
-      return res.status(400).json({ error: "Cannot request with the same granter and email again." });
+      return res
+        .status(400)
+        .json({
+          error: "Cannot request with the same granter and email again.",
+        });
     }
 
     const newClientRequest = new ClientRequest({
@@ -42,6 +47,16 @@ const createClientRequest = async (req, res) => {
  */
 const getAllGrants = async (req, res) => {
   const allData = await GrantsAll.find();
+  res.send(allData);
+};
+
+/**
+ * Retrieves all grants.
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ */
+const GetUserForAdmin = async (req, res) => {
+  const allData = await OnBoardUser.find();
   res.send(allData);
 };
 
@@ -81,7 +96,6 @@ const getUserGrantRequest = async (req, res) => {
 
 const OnBoardNewUser = async (req, res) => {
   const { role, username, email, picture } = req.body;
-  console.log(`granter name -----> ${role}`);
   const existingUser = await OnBoardUser.findOne({ email });
   if (existingUser) {
     return res.status(400).json({ message: "User already exists" });
@@ -105,7 +119,7 @@ const OnBoardNewUser = async (req, res) => {
 
 const AdminDecision = async (req, res) => {
   const { id, granterName, email, grantStatus } = req.body;
-  console.log(id)
+  console.log(id);
   try {
     // Find the user by ID
     ClientRequest.findById(id)
@@ -134,7 +148,6 @@ const AdminDecision = async (req, res) => {
   }
 };
 
-
 module.exports = {
   createClientRequest,
   getAllGrants,
@@ -142,4 +155,5 @@ module.exports = {
   getUserGrantRequest,
   OnBoardNewUser,
   AdminDecision,
+  GetUserForAdmin
 };
