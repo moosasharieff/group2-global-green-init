@@ -37,7 +37,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(`user email ------$$$$$ ${user}`)
     const fetchData = async () => {
       const timeout = setTimeout(async () => {
         try {

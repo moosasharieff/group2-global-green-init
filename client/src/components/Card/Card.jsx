@@ -1,8 +1,7 @@
-import plantImage1 from "../../assets/plant1.png";
 import GrantForm from "../form/GrantForm";
 import { useState } from "react";
 
-function Card({ grantImage, name, desc, rate }) {
+function Card({ key, img, name, desc, rate }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const truncatedDescription = Turncate(desc, 30);
   function Turncate(description, descLength) {
@@ -27,7 +26,7 @@ function Card({ grantImage, name, desc, rate }) {
         <div className="p-4 m-4">
           <img
             className="rounded-xl object-fill"
-            src={plantImage1}
+            src={img}
             alt="img-1"
           />
         </div>

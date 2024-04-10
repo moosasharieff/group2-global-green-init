@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import ClipLoader from "react-spinners/ClipLoader";
 
-function PaginationTable() {
+function AdminClientRequestsPage() {
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -27,7 +27,6 @@ function PaginationTable() {
     try {
       const response = await axios.get(api_url);
       setClientRequest(response.data);
-      console.log("response ----> ", response.data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -196,4 +195,4 @@ function PaginationTable() {
   );
 }
 
-export default PaginationTable;
+export default AdminClientRequestsPage;
