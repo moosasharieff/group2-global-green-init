@@ -226,6 +226,7 @@ pipeline {
                                 sh """
                                     ssh -o StrictHostKeyChecking=no ubuntu@3.149.249.31 '
                                     docker pull ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-frontend-${env.BUILD_NUMBER} &&
+                                    docker stop globalgreen-frontend-v4 || true &&
                                     docker rm globalgreen-frontend-v4 || true &&
                                     docker run -d --name globalgreen-frontend-v4 -p 8090:80 ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-frontend-${env.BUILD_NUMBER}
                                     '
@@ -240,6 +241,7 @@ pipeline {
                                 sh """
                                     ssh -o StrictHostKeyChecking=no ubuntu@18.191.147.35 '
                                     docker pull ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-frontend-${env.BUILD_NUMBER} &&
+                                    docker stop globalgreen-frontend-v4 || true &&
                                     docker rm globalgreen-frontend-v4 || true &&
                                     docker run -d --name globalgreen-frontend-v4 -p 8090:80 ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-frontend-${env.BUILD_NUMBER}
                                     '
@@ -254,6 +256,7 @@ pipeline {
                                 sh """
                                     ssh -o StrictHostKeyChecking=no ubuntu@3.145.52.166 '
                                     docker pull ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-frontend-${env.BUILD_NUMBER} &&
+                                    docker stop globalgreen-frontend-v4 || true &&
                                     docker rm globalgreen-frontend-v4 || true &&
                                     docker run -d --name globalgreen-frontend-v4 -p 8090:80 ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-frontend-${env.BUILD_NUMBER}
                                     '
