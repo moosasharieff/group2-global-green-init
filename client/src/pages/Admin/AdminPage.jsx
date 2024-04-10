@@ -6,7 +6,6 @@ import AdminClientRequestsPage from "../../components/AdminComponents/AdminClien
 import AdminAddGrants from "../../components/AdminComponents/AdminAddGrants";
 import { FiUsers } from "react-icons/fi";
 import { PiUserSwitchFill } from "react-icons/pi";
-import { CgAdd } from "react-icons/cg";
 
 const SidebarMenu = [
   { icon: <FiUsers/>, value: "Users" },

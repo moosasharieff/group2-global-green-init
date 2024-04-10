@@ -1,5 +1,5 @@
 import Logo from "../../assets/plant.svg";
-import Logo1 from "../../assets/plant.svg"
+import Logo1 from "../../assets/plant.svg";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -16,7 +16,10 @@ function Navbar() {
       <ul className="m-x-10 flex w-[80%] items-center justify-center">
         <li key={1} className="h-12 w-12">
           {" "}
-          <img src={Logo} alt="logo" />
+          <img
+            src="https://res.cloudinary.com/dpq59lnba/image/upload/v1706479630/xfetqj4iuwuoaqe0fc0n.jpg"
+            alt="logo"
+          />
         </li>
         <li key={2}>
           <h1

@@ -6,6 +6,7 @@ const {
   getUserGrantRequest,
   OnBoardNewUser,
   AdminDecision,
+  GetUserForAdmin,
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -64,6 +65,17 @@ router.get("/get-user-requests", getUserGrantRequest);
  * @param {Function} next - Next middleware function.
  */
 router.post("/save-new-user", OnBoardNewUser);
+
+/**
+ * Route to get all grants.
+ * @name GET /api/user requests
+ * @function
+ * @memberof module:routes/getUserRequests
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Next middleware function.
+ */
+router.get("/get-users-details", GetUserForAdmin);
 
 /**
  * Route to get all grants.

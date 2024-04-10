@@ -3,8 +3,10 @@ import Card from "../../components/Card/Card";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import RequestModel from "../../components/RequestModal/RequestModel";
+import { useAuth0 } from "@auth0/auth0-react"
 
 function LandingPage() {
+  const user = useAuth0();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [granterData, setGratnerData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,12 +37,30 @@ function LandingPage() {
         const response = await axios.get(API_BASE_URL);
         setGratnerData(response.data);
         setFilteredData(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
+
+    const OnBoardUser = async () => {
+      console.log(user.user.nickname)
+      try {
+        const userData = {
+          role: 'Client',
+          username: user.user.nickname,
+          email: user.user.email,
+          picture: user.user.picture,
+        };
+        const api_url = `${process.env.REACT_APP_API_BASE_URL}api/save-new-user`;
+        const response = await axios.post(api_url, userData);
+        console.log("Response from server: --------", response.data);
+      } catch (error) {
+        console.error("Error making Axios POST request:", error);
+      }
+    };
+
     fetchData();
+    OnBoardUser();
   }, []);
 
   return (
@@ -76,48 +96,17 @@ function LandingPage() {
           <RequestModel isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
       </div>
-      {/* <div className="grid h-auto grid-cols-2 place-items-center gap-8 rounded-xl shadow-md md:ml-40 md:mt-10 md:w-[75%]">
-        <div className="rounded-xl">
-          <img className="rounded-xl" src={plantImge2} alt="popular-card" />
-        </div>
-        <div className="mb-[-10] grid grid-rows-2 rounded-xl">
-          <div className="p-10">
-            <h1 className="mb-4 flex flex-row place-items-center gap-2">
-              <IoFolderOpenOutline /> <span>Organization</span>
-            </h1>
-            <h1 className="font-extrabold">
-              Remake - We make architecture exhibition
-            </h1>
-            <p>
-              Remake - We make architecture exhibition social agency in the face
-              of urbanization
-            </p>
-          </div>
-          <div className="grid grid-cols-3 place-items-center">
-            <div className="w-auto cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-neutral-200">
-              <h1>$20,000</h1>
-              <p>Raise of $2,000</p>
-            </div>
-            <div className="w-auto cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-neutral-200">
-              <h1>$20,000</h1>
-              <p>Raise of $2,000</p>
-            </div>
-            <div className="w-auto cursor-pointer items-center justify-center rounded-xl p-2 hover:bg-neutral-200">
-              <h1>$20,000</h1>
-              <p>Raise of $2,000</p>
-            </div>
-          </div>
-        </div>
-      </div> */}
       <div className="row-span-2 grid w-full place-items-center gap-6 bg-neutral-50 p-4 md:row-span-8 md:grid-cols-4 md:px-36">
         {filteredData.map((granter) => (
-          <Card
-            key={granter._id}
-            img={granter.img}
-            name={granter.name}
-            desc={granter.description}
-            rate={granter.grant_amount}
-          />
+          <>
+            <Card
+              key={granter._id}
+              img={granter.grantImage}
+              name={granter.name}
+              desc={granter.description}
+              rate={granter.grant_amount}
+            />
+          </>
         ))}
       </div>
       <div className="grid h-20 grid-cols-3 place-items-center rounded-xl bg-neutral-100">
