@@ -19,7 +19,7 @@ pipeline {
                         env.ENVIRONMENT = 'Production'
                     } else if (BRANCH_NAME == 'development') {
                         env.ENVIRONMENT = 'Testing'
-                    } else if (BRANCH_NAME == 'DevOps') {
+                    } else if (BRANCH_NAME == 'staging') {
                         env.ENVIRONMENT = 'Staging'
                     } else {
                         // For any branch not explicitly mentioned, you can choose to skip the build
