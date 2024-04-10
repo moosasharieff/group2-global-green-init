@@ -278,7 +278,7 @@ pipeline {
                         withCredentials([string(credentialsId: 'MONGO_URI', variable: 'MONGO_URI_SECRET')]) {
                             sshagent(['sshtoaws']) {
                                 sh """
-                                    ssh -o StrictHostKeyChecking=no ubuntu@3.145.52.166'
+                                    ssh -o StrictHostKeyChecking=no ubuntu@3.145.52.166 '
                                     docker pull ${env.DOCKER_IMAGEE}:${env.ENVIRONMENT.toLowerCase()}-backend-${env.BUILD_NUMBER} &&
                                     docker stop globalgreen-backend-v4 || true &&
                                     docker rm globalgreen-backend-v4 || true &&
